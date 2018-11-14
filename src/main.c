@@ -7,7 +7,7 @@
 
 #include "trantor.h"
 
-int main(int ac, char **av)
+int main(void)
 {
-    return (trantor(ac, av));
+    return (trantor());
 }

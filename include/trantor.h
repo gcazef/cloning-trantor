@@ -8,6 +8,6 @@
 #ifndef TRANTOR_H_
 #define TRANTOR_H_
 
-int trantor(int nb_args, char **args);
+int trantor(void);
 
 #endif /* !TRANTOR_H_ */
