@@ -6,6 +6,8 @@
 ##
 
 SRC =	src/trantor_world.c\
+		src/trantor_server.c\
+		src/trantor.c\
 		src/main.c
 
 OBJ =	$(SRC:.c=.o)
@@ -30,5 +32,7 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+#tests_run
 
 .PHONY: all clean fclean re

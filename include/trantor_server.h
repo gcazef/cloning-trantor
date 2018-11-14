@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2018
 ** trantor_server
 ** File description:
-** Functions for connection handling
+** Header for connection handling
 */
 
 #ifndef TRANTOR_SERVER_H_
