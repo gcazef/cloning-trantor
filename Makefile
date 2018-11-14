@@ -5,7 +5,8 @@
 ## Makefile for cloning trantor
 ##
 
-SRC =	
+SRC =	src/trantor_world.c\
+		src/main.c
 
 OBJ =	$(SRC:.c=.o)
 
