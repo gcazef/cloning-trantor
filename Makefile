@@ -5,3 +5,29 @@
 ## Makefile for cloning trantor
 ##
 
+SRC =	
+
+OBJ =	$(SRC:.c=.o)
+
+CC =	gcc
+
+INC =	-I./include
+
+CFLAGS =	-W -Wall -Wextra -Werror $(INC)
+
+NAME =	trantor_v1
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
+
+clean:
+	rm -f $(OBJ)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
