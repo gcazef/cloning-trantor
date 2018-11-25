@@ -2,3 +2,5 @@
 trantor_v1
 *.o
 
+#valgrind
+vgcore.*

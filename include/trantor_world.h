@@ -10,6 +10,8 @@
 
 #include "trantor_elements.h"
 
+cell_t *create_cell(void);
+void link_lines(cell_t *prev, cell_t *curr);
 cell_t *create_grid(int width, int height);
 int destroy_grid(cell_t *top_left);
 

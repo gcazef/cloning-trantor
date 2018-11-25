@@ -28,10 +28,10 @@ typedef struct resource {
 typedef struct cell {
     int x_pos;
     int y_pos;
-    cell_t *up;
-    cell_t *down;
-    cell_t *left;
-    cell_t *right;
+    struct cell *up;
+    struct cell *down;
+    struct cell *left;
+    struct cell *right;
     resource_t resources;
     int players;
 } cell_t;

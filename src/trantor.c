@@ -6,14 +6,26 @@
 */
 
 #include <stddef.h>
+#include <stdio.h>
 #include "trantor_elements.h"
 #include "trantor_world.h"
-#include "trantor_server.h"
 
 int trantor(void)
 {
-    grid_t grid = create_grid(10, 10);
-    (void) grid;
-    //destroy_grid(grid);
+    cell_t *top_left = create_grid(10, 10);
+
+    cell_t *width = top_left;
+    cell_t *height = width;
+
+    while (height != NULL) {
+        while (width != NULL) {
+            printf(".");
+            width = width->right;
+        }
+        printf("\n");
+        height = height->down;
+        width = height;
+    }
+    destroy_grid(top_left);
     return (0);
 }

@@ -6,6 +6,7 @@
 ##
 
 SRC =	src/trantor_world.c\
+		src/trantor.c\
 		src/main.c
 
 OBJ =	$(SRC:.c=.o)
