@@ -13,7 +13,7 @@
 int trantor(void)
 {
     grid_t grid = create_grid(10, 10);
-    populate_grid(grid);
+    (void) grid;
     //destroy_grid(grid);
     return (0);
 }

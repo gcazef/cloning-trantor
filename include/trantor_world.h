@@ -10,10 +10,7 @@
 
 #include "trantor_elements.h"
 
-grid_t create_grid(int width, int height);
-int populate_grid(grid_t grid);
-element_t *create_element(char *type, char identifier);
-int clean_cell(cell_t cell);
-int destroy_grid(grid_t grid);
+cell_t *create_grid(int width, int height);
+int destroy_grid(cell_t *top_left);
 
 #endif /* !TRANTOR_WORLD_H_ */
