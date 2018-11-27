@@ -12,6 +12,7 @@
 
 cell_t *create_cell(void);
 void link_lines(cell_t *prev, cell_t *curr);
+//void link_borders(cell_t *top_left);
 cell_t *create_grid(int width, int height);
 int destroy_grid(cell_t *top_left);
 

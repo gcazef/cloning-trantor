@@ -31,6 +31,13 @@ void link_lines(cell_t *prev, cell_t *curr)
     }
 }
 
+/*
+void link_borders(cell_t *top_left)
+{
+
+}
+*/
+
 cell_t *create_grid(int width, int height)
 {
     cell_t *head = create_cell();
