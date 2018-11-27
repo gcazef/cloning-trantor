@@ -31,12 +31,28 @@ void link_lines(cell_t *prev, cell_t *curr)
     }
 }
 
-/*
 void link_borders(cell_t *top_left)
 {
+    cell_t *curr = top_left;
+    cell_t *end = top_left;
 
+    while (curr != NULL) {
+        while (end->down != NULL)
+            end = end->down;
+        end->down = curr;
+        curr->up = end;
+        curr = curr->right;
+        if (end->right != NULL)
+            end = end->right;
+    }
+    curr = top_left->up;
+    while (top_left->left != end) {
+        end->right = curr;
+        curr->left = end;
+        curr = curr->up;
+        end = end->up;
+    }
 }
-*/
 
 cell_t *create_grid(int width, int height)
 {
@@ -56,32 +72,35 @@ cell_t *create_grid(int width, int height)
         prev = curr;
         if (i < (height - 1)) {
             head->up = create_cell();
-            (head->up)->down = head;
             head = head->up;
         }
     }
+    link_borders(curr);
     return (curr);
 }
 
 int destroy_grid(cell_t *top_left)
 {
-    cell_t *curr = top_left;
-    cell_t *prev = NULL;
+    cell_t *top_right = top_left->left;
+    cell_t *curr = top_right->up;
 
+    top_left->left = NULL;
     while (curr != NULL) {
-        while (curr->down != NULL)
-            curr = curr->down;
+        top_right->up = NULL;
         while (curr->up != NULL) {
             curr = curr->up;
             free(curr->down);
             curr->down = NULL;
         }
-        prev = curr;
-        curr = curr->right;
-        free(prev);
-        prev = NULL;
-        
+        if (top_right->left != NULL) {
+            top_right = top_right->left;
+            free(curr);
+            curr = top_right->up;
+            
+        } else {
+            free(curr);
+            curr = NULL;
+        }
     }
-    free(curr);
     return (0);
 }
