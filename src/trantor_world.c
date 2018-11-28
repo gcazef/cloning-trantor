@@ -70,12 +70,11 @@ cell_t *create_grid(int width, int height)
         if (prev != NULL)
             link_lines(prev, curr);
         prev = curr;
-        if (i < (height - 1)) {
-            head->up = create_cell();
-            head = head->up;
-        }
+        if (i < (height - 1))
+            head = create_cell();
     }
-    link_borders(curr);
+    if (curr != NULL)
+        link_borders(curr);
     return (curr);
 }
 

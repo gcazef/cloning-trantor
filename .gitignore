@@ -1,5 +1,6 @@
 #binaries
 trantor_v1
+trantor_test
 *.o
 
 #valgrind

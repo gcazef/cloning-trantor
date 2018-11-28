@@ -32,6 +32,8 @@ fclean: clean
 
 re: fclean all
 
-#tests_run
+test: 
+	make -C tests
+	./tests/trantor_test
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test
