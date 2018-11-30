@@ -6,6 +6,7 @@
 ##
 
 SRC =	../src/trantor_world.c\
+		../src/trantor_resources.c\
 		test_create_grid.c\
 		test_create_cell.c\
 		test_link_lines.c\

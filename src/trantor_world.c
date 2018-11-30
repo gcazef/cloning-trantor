@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include "trantor_elements.h"
+#include "trantor_resources.h"
 
 cell_t *create_cell(void)
 {
@@ -18,6 +19,7 @@ cell_t *create_cell(void)
     new_cell->left = NULL;
     new_cell->right = NULL;
     new_cell->players = 0;
+    new_cell->resources = generate_resource();
     return (new_cell);
 }
 
@@ -56,11 +58,12 @@ void link_borders(cell_t *top_left)
 
 cell_t *create_grid(int width, int height)
 {
-    cell_t *head = create_cell();
+    cell_t *head = NULL;
     cell_t *prev = NULL;
     cell_t *curr = NULL;
 
     for (int i = 0; i < height; i++) {
+        head = create_cell();
         curr = head;
         for (int j = 0; j < (width - 1); j++) {
             curr->left = create_cell();
@@ -70,8 +73,6 @@ cell_t *create_grid(int width, int height)
         if (prev != NULL)
             link_lines(prev, curr);
         prev = curr;
-        if (i < (height - 1))
-            head = create_cell();
     }
     if (curr != NULL)
         link_borders(curr);

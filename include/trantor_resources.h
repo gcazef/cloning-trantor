@@ -8,7 +8,6 @@
 #ifndef TRANTOR_RESOURCES_H_
 #define TRANTOR_RESOURCES_H_
 
-
-
+resource_t generate_resource(void);
 
 #endif /* !TRANTOR_RESOURCES_H_ */

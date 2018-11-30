@@ -8,7 +8,8 @@
 #include <stdlib.h>
 #include "trantor_elements.h"
 
-resource_t generate_resource (void){
+resource_t generate_resource(void)
+{
     resource_t ptr;
     srand(time(NULL));
 
@@ -19,6 +20,5 @@ resource_t generate_resource (void){
     ptr.mendiane = rand() %5;
     ptr.phiras = rand() %5;
     ptr.thystame = rand()%5;
-
     return (ptr);
 }

@@ -13,6 +13,7 @@
 int trantor(void)
 {
     cell_t *top_left = create_grid(10, 10);
+    printf("%d", (top_left->resources).food);
     destroy_grid(top_left);
     return (0);
 }
