@@ -15,5 +15,6 @@ void link_lines(cell_t *prev, cell_t *curr);
 void link_borders(cell_t *top_left);
 cell_t *create_grid(int width, int height);
 int destroy_grid(cell_t *top_left);
+resource_t generate_resource(void);
 
 #endif /* !TRANTOR_WORLD_H_ */
