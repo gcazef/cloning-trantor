@@ -39,6 +39,7 @@ player_t create_player(char *team, cell_t *top_left, int height, int width)
     for (int i = 0; i < posY; i++)
         pos = pos->down;
     new_player.position = pos;
+    new_player.position->players += 1;
     new_player.front_cell = pos->up;
     new_player.up = 1;
     new_player.down = 0;
@@ -53,8 +54,10 @@ int trantor(void)
 {
     cell_t *top_left = create_grid(10, 10);
     player_t p = create_player("squad", top_left, 10, 10);
+    char *lookStr = look(&p);
 
-    printf("%s\n", look(&p));
+    printf("%s\n", lookStr);
+    free(lookStr);
     destroy_grid(top_left);
     return (0);
 }

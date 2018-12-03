@@ -62,7 +62,9 @@ int rotate_right(player_t *player)
 
 int move_forward(player_t *player)
 {
+    player->position->players -= 1;
     player->position = player->front_cell;
+    player->position->players += 1;
     if (player->up == 1)
         player->front_cell = (player->position)->up;
     if (player->down == 1)
@@ -77,8 +79,12 @@ int move_forward(player_t *player)
 char *look(player_t *player)
 {
     char *result;
+    //char *temp;
 
-    result = look_cell(player->position);    
+    result = look_cell(player->position);
+    //temp = strcat("[", result);
+    //result = temp;
+
     return (result);
 }
 

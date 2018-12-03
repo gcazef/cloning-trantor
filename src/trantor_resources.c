@@ -27,13 +27,20 @@ resource_t generate_resource(void)
 
 char *look_cell(cell_t *cell)
 {
-    char *result = malloc(sizeof(char) * 3000);
+    char *result = calloc(cell->players * 7, sizeof(char));
+    int resLen = 0;
+    int oldLen = 0;
 
     for (int i = 0; i < cell->players; i++)
         result = strcat(result, " player");
     for (int i = 0; i < 7; i++) {
-        for (int j = 0; j < (cell->resources).res[i]; j++)
+        resLen = (strlen(resource_names[i]) + 1) * (cell->resources).res[i];
+        oldLen = strlen(result);
+        result = realloc(result, (resLen + oldLen));
+        for (int j = 0; j < (cell->resources).res[i]; j++) {
+            result = strcat(result, " ");
             result = strcat(result, resource_names[i]);
+        }
     }
     return (result);
 }

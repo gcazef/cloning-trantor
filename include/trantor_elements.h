@@ -8,16 +8,7 @@
 #ifndef TRANTOR_ELEMENTS_H_
 #define TRANTOR_ELEMENTS_H_
 
-char const *resource_names[7] =
-{
-    "food",
-    "linemate",
-    "deraumere",
-    "sibur",
-    "mendiane",
-    "phiras",
-    "thystame"
-};
+char const *resource_names[7];
 
 typedef union {
     struct {

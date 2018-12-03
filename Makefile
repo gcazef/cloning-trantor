@@ -5,7 +5,8 @@
 ## Makefile for cloning trantor
 ##
 
-SRC =	src/trantor_resources.c\
+SRC =	src/trantor_elements.c\
+		src/trantor_resources.c\
 		src/trantor_world.c\
 		src/trantor_player.c\
 		src/trantor.c\
