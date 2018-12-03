@@ -9,5 +9,6 @@
 #define TRANTOR_RESOURCES_H_
 
 resource_t generate_resource(void);
+char *look_cell(cell_t *cell);
 
 #endif /* !TRANTOR_RESOURCES_H_ */

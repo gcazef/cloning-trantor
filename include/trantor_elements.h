@@ -7,22 +7,29 @@
 
 #ifndef TRANTOR_ELEMENTS_H_
 #define TRANTOR_ELEMENTS_H_
-/*
-typedef struct player {
-    struct element base;
-    char *team;
-    int id;
-} player_t;
-*/
 
-typedef struct resource {
-    int food;
-    int linemate;
-    int deraumere;
-    int sibur;
-    int mendiane;
-    int phiras;
-    int thystame;
+char const *resource_names[7] =
+{
+    "food",
+    "linemate",
+    "deraumere",
+    "sibur",
+    "mendiane",
+    "phiras",
+    "thystame"
+};
+
+typedef union {
+    struct {
+        int food;
+        int linemate;
+        int deraumere;
+        int sibur;
+        int mendiane;
+        int phiras;
+        int thystame;
+    };
+    int res[7];
 } resource_t;
 
 typedef struct cell {
@@ -35,6 +42,17 @@ typedef struct cell {
     resource_t resources;
     int players;
 } cell_t;
+
+typedef struct player {
+    cell_t *position;
+    cell_t *front_cell;
+    int up;
+    int down;
+    int left;
+    int right;
+    resource_t inventory;
+    char *team;
+} player_t;
 
 /*
 typedef struct grid {
