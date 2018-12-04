@@ -21,11 +21,6 @@ int trantor(void)
     char *lookStr = look(&p);
 
     printf("%s\n", lookStr);
-    /*
-    printf("%s\n", display_resources(p.position));
-    printf("%s\n", display_resources(p.front_cell));
-    printf("%s\n", display_resources((p.position)->left));
-    */
     free(lookStr);
     destroy_grid(top_left);
     return (0);

@@ -5,7 +5,6 @@
 ** Generation of trantor resources
 */
 
-#include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #include "trantor_elements.h"
@@ -13,15 +12,10 @@
 resource_t generate_resource(void)
 {
     resource_t ptr;
-    srand(time(NULL));
 
-    ptr.food = rand() % 2;
-    ptr.linemate = rand() % 2;
-    ptr.deraumere = rand() % 2;
-    ptr.sibur = rand() % 2;
-    ptr.mendiane = rand() % 2;
-    ptr.phiras = rand() % 2;
-    ptr.thystame = rand() % 2;
+    for (int i = 0; i < 7; i++) {
+        ptr.res[i] = rand() % 2;
+    }
     return (ptr);
 }
 
