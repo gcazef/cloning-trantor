@@ -5,8 +5,35 @@
 ** Functions related to player
 */
 
+#include <time.h>
+#include <stdlib.h>
+#include <stddef.h>
 #include "trantor_elements.h"
 #include "trantor_vision.h"
+
+player_t create_player(char *team, cell_t *top_left, int height, int width)
+{
+    srand(time(NULL));
+    player_t new_player;
+    cell_t *pos = top_left;
+
+    int posX = rand() % width;
+    int posY = rand() % height;
+    for (int i = 0; i < posX; i++)
+        pos = pos->right;
+    for (int i = 0; i < posY; i++)
+        pos = pos->down;
+    new_player.position = pos;
+    new_player.position->players += 1;
+    new_player.front_cell = pos->up;
+    new_player.up = 1;
+    new_player.down = 0;
+    new_player.left = 0;
+    new_player.right = 0;
+    new_player.team = team;
+    new_player.inventory = create_inventory();
+    return (new_player);
+}
 
 void rotate_left(player_t *player)
 {

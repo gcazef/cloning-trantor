@@ -10,5 +10,6 @@
 
 resource_t generate_resource(void);
 char *display_resources(cell_t *cell);
+resource_t create_inventory(void);
 
 #endif /* !TRANTOR_RESOURCES_H_ */
