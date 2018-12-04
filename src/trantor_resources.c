@@ -54,3 +54,24 @@ resource_t create_inventory(void)
     inventory.thystame = 0;
     return (inventory);
 }
+
+int drop_resource(player_t *player, char *name)
+{
+    int found = 1;
+    int i = 0;
+    int present = 0;
+
+    while ((found != 0) && (i < 7)) {
+        found = strcmp(name, resource_names[i]);
+        i++;
+    }
+    if (found != 0)
+        return (84);
+    present = (player->inventory).res[i - 1];
+    if (present > 0) {
+        (player->inventory).res[i - 1] -= 1;
+        ((player->position)->resources).res[i - 1] += 1;
+        return (0);
+    }
+    return (84);
+}
