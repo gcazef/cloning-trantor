@@ -19,9 +19,12 @@ int trantor(void)
     cell_t *top_left = create_grid(10, 10);
     player_t p = create_player("squad", top_left, 10, 10);
     char *lookStr = look(&p);
+    char *invStr = display_inventory(&p);
 
     printf("%s\n", lookStr);
+    printf("%s\n", invStr);
     free(lookStr);
+    free(invStr);
     destroy_grid(top_left);
     return (0);
 }

@@ -8,6 +8,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <string.h>
+#include <stdio.h>
 #include "trantor_elements.h"
 #include "trantor_resources.h"
 
@@ -99,12 +101,24 @@ int move_forward(player_t *player)
     return (0);
 }
 
-
-
-/*
 char *display_inventory(player_t *player)
 {
-
-    return (0);
+    char *result = calloc(2, sizeof(char));
+    char *temp;
+    int len = 0;
+    
+    result[0] = '[';
+    for (int i = 0; i < 7; i++) {
+        temp = calloc((9 + strlen(resource_names[i])), sizeof(char));
+        sprintf(temp, " %s %d", resource_names[i], (player->inventory).res[i]);
+        len = strlen(result);
+        result = realloc(result, (len + strlen(temp) + 2));
+        result = strcat(result, temp);
+        free(temp);
+        if (i < 6)
+            result = strcat(result, ",");
+        else
+            result = strcat(result, " ]");
+    }
+    return (result);
 }
-*/
