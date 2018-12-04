@@ -8,8 +8,6 @@
 #ifndef TRANTOR_PLAYER_H_
 #define TRANTOR_PLAYER_H_
 
-#include "trantor_elements.h"
-
 player_t create_player(char *team, cell_t *top_left, int height, int width);
 void rotate_left(player_t *player);
 void rotate_right(player_t *player);

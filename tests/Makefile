@@ -5,13 +5,16 @@
 ## Makefile for trantorian_cli unit tests
 ##
 
-SRC =	../src/trantor_world.c\
+SRC =	../src/trantor_elements.c\
+		../src/trantor_world.c\
 		../src/trantor_resources.c\
+		../src/trantor_vision.c\
 		../src/trantor_player.c\
 		test_create_grid.c\
 		test_create_cell.c\
 		test_link_lines.c\
-		test_destroy_grid.c
+		test_destroy_grid.c\
+		test_create_inventory.c
 
 OBJ = $(SRC:.c=.o)
 
