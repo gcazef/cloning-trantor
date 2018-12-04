@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include "trantor_elements.h"
-#include "trantor_vision.h"
+#include "trantor_resources.h"
 
 player_t create_player(char *team, cell_t *top_left, int height, int width)
 {
