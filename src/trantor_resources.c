@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
 #include "trantor_elements.h"
 
 resource_t generate_resource(void)
@@ -60,6 +61,7 @@ int drop_resource(player_t *player, char *name)
     int found = 1;
     int i = 0;
     int present = 0;
+    cell_t *pos = player->position;
 
     while ((found != 0) && (i < 7)) {
         found = strcmp(name, resource_names[i]);
@@ -69,8 +71,10 @@ int drop_resource(player_t *player, char *name)
         return (84);
     present = (player->inventory).res[i - 1];
     if (present > 0) {
+        pthread_mutex_lock(&(pos->res_mutex[i - 1]));
         (player->inventory).res[i - 1] -= 1;
-        ((player->position)->resources).res[i - 1] += 1;
+        (pos->resources).res[i - 1] += 1;
+        pthread_mutex_unlock(&(pos->res_mutex[i - 1]));
         return (0);
     }
     return (84);
@@ -81,6 +85,7 @@ int take_resource(player_t *player, char *name)
     int found = 1;
     int i = 0;
     int present = 0;
+    cell_t *pos = player->position;
 
     while ((found != 0) && (i < 7)) {
         found = strcmp(name, resource_names[i]);
@@ -88,10 +93,12 @@ int take_resource(player_t *player, char *name)
     }
     if (found != 0)
         return (84);
-    present = ((player->position)->resources).res[i - 1];
+    present = (pos->resources).res[i - 1];
     if (present > 0) {
+        pthread_mutex_lock(&(pos->res_mutex[i - 1]));
         (player->inventory).res[i - 1] += 1;
-        ((player->position)->resources).res[i - 1] -= 1;
+        (pos->resources).res[i - 1] -= 1;
+        pthread_mutex_unlock(&(pos->res_mutex[i - 1]));
         return (0);
     }
     return (84);

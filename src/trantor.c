@@ -24,7 +24,7 @@ int trantor(void)
     drop_resource(&p, "food");
     printf("\n%s\n", look(&p));
     printf("%s\n", display_inventory(&p));
-    take_resource(&p, "linemate");
+    take_resource(&p, "food");
     printf("\n%s\n", look(&p));
     printf("%s\n", display_inventory(&p));
     destroy_grid(top_left);

@@ -8,6 +8,8 @@
 #ifndef TRANTOR_ELEMENTS_H_
 #define TRANTOR_ELEMENTS_H_
 
+#include <pthread.h>
+
 char const *resource_names[7];
 
 typedef union {
@@ -24,14 +26,13 @@ typedef union {
 } resource_t;
 
 typedef struct cell {
-    int x_pos;
-    int y_pos;
     struct cell *up;
     struct cell *down;
     struct cell *left;
     struct cell *right;
     resource_t resources;
     int players;
+    pthread_mutex_t res_mutex[7];
 } cell_t;
 
 typedef struct player {
@@ -44,13 +45,5 @@ typedef struct player {
     resource_t inventory;
     char *team;
 } player_t;
-
-/*
-typedef struct grid {
-    cell_t **cells;
-    int width;
-    int height;
-} grid_t;
-*/
 
 #endif /* !TRANTOR_ELEMENTS_H_ */
