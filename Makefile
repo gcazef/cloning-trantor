@@ -7,6 +7,7 @@
 
 SRC =	src/trantor_elements.c\
 		src/trantor_resources.c\
+		src/trantor_vision.c\
 		src/trantor_world.c\
 		src/trantor_player.c\
 		src/trantor.c\
@@ -37,6 +38,7 @@ re: fclean all
 
 thread:
 	$(CC) $(CFLAGS) -fsanitize=thread -o $(NAME) $(OBJ)
+
 test: 
 	make -C tests
 	./tests/trantor_test

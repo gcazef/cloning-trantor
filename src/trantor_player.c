@@ -5,12 +5,10 @@
 ** Functions related to player
 */
 
-#include <stdlib.h>
-#include <string.h>
 #include "trantor_elements.h"
-#include "trantor_resources.h"
+#include "trantor_vision.h"
 
-int rotate_left(player_t *player)
+void rotate_left(player_t *player)
 {
     if (player->up == 1) {
         player->up = 0;
@@ -32,10 +30,9 @@ int rotate_left(player_t *player)
         player->up = 1;
         player->front_cell = (player->position)->up;
     }
-    return (0);
 }
 
-int rotate_right(player_t *player)
+void rotate_right(player_t *player)
 {
     if (player->up == 1) {
         player->up = 0;
@@ -57,7 +54,6 @@ int rotate_right(player_t *player)
         player->down = 1;
         player->front_cell = (player->position)->down;
     }
-    return (0);
 }
 
 int move_forward(player_t *player)
@@ -76,17 +72,7 @@ int move_forward(player_t *player)
     return (0);
 }
 
-char *look(player_t *player)
-{
-    char *result;
-    //char *temp;
 
-    result = look_cell(player->position);
-    //temp = strcat("[", result);
-    //result = temp;
-
-    return (result);
-}
 
 /*
 char *display_inventory(player_t *player)
