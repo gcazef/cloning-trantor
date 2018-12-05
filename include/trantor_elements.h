@@ -47,4 +47,16 @@ typedef struct player {
     int socket_fd;
 } player_t;
 
+typedef struct grid {
+    cell_t *top_left;
+    int height;
+    int width;
+} grid_t;
+
+typedef struct args {
+    int height;
+    int width;
+    int port;
+} args_t;
+
 #endif /* !TRANTOR_ELEMENTS_H_ */

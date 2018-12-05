@@ -6,11 +6,8 @@
 */
 
 #include "trantor.h"
-#include <stdlib.h>
 
-int main(int argv, char **argc)
+int main(int argc, char **argv)
 {
-    if (argv < 0)
-        return(84);
-    return (trantor(argc[1], atoi(argc[2])));
+    return (trantor(argc, argv));
 }

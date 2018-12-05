@@ -24,9 +24,6 @@
 #include "trantor_resources.h"
 #include "trantor_server.h"
 
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
-
 int checkcommand(char *client_message)
 {
     int i = 0;
