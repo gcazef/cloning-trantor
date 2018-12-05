@@ -44,6 +44,7 @@ typedef struct player {
     int right;
     resource_t inventory;
     char *team;
+    int socket_fd;
 } player_t;
 
 #endif /* !TRANTOR_ELEMENTS_H_ */
