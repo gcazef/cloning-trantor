@@ -9,6 +9,6 @@
 #define TRANTOR_H_
 #include "trantor_elements.h"
 
-int trantor(void);
+int trantor(char *ip, int port);
 
 #endif /* !TRANTOR_H_ */
