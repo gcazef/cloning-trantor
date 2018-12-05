@@ -11,6 +11,9 @@
 #include <pthread.h>
 
 char const *resource_names[7];
+char const *cmd_names[7];
+int const (*no_arg_cmd[5])(player_t *player);
+int const (*arg_cmd[2])(player_t *player, char *name);
 
 typedef union {
     struct {

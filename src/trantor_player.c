@@ -15,7 +15,6 @@
 
 player_t create_player(char *team, cell_t *top_left, int height, int width)
 {
-    srand(time(NULL));
     player_t new_player;
     cell_t *pos = top_left;
 
@@ -26,6 +25,8 @@ player_t create_player(char *team, cell_t *top_left, int height, int width)
     for (int i = 0; i < posY; i++)
         pos = pos->down;
     new_player.position = pos;
+    if (new_player.position->resources.food == 0)
+        new_player.position->resources.food = 1;
     new_player.position->players += 1;
     new_player.front_cell = pos->up;
     new_player.up = 1;
@@ -101,7 +102,7 @@ int move_forward(player_t *player)
     return (0);
 }
 
-char *display_inventory(player_t *player)
+int display_inventory(player_t *player)
 {
     char *result = calloc(2, sizeof(char));
     char *temp;
@@ -120,5 +121,7 @@ char *display_inventory(player_t *player)
         else
             result = strcat(result, " ]");
     }
-    return (result);
+    printf("%s\n", result);
+    free(result);
+    return (0);
 }

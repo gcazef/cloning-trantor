@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <getopt.h>
 #include <stddef.h>
+#include <time.h>
 #include "trantor_world.h"
 #include "trantor_elements.h"
 
@@ -48,12 +49,10 @@ int trantor(int ac, char **av)
     grid_t grid;
     args_t args = parse_args(ac, av);
 
-    printf("%d", args.width);
-    printf("%d", args.height);
-    printf("%d", args.port);
-    /*grid.height = args.height;
+    srand(time(NULL));
+    grid.height = args.height;
     grid.width = args.width;
-    grid.top_left = create_grid(10, 10);    
-    destroy_grid(grid.top_left);*/
+    grid.top_left = create_grid(grid.width, grid.height);
+    destroy_grid(grid.top_left);
     return (0);
 }

@@ -110,7 +110,7 @@ char *look_right(player_t *player)
     return (result);
 }
 
-char *look(player_t *player)
+int look(player_t *player)
 {
     char *result;
 
@@ -122,5 +122,7 @@ char *look(player_t *player)
         result = look_left(player);
     if (player->right == 1)
         result = look_left(player);
-    return (result);
+    printf("%s\n", result);
+    free(result);
+    return (0);
 }

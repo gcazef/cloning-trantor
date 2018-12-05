@@ -7,7 +7,6 @@
 
 #include <stdlib.h>
 #include <stddef.h>
-#include <time.h>
 #include <pthread.h>
 #include "trantor_elements.h"
 #include "trantor_resources.h"
@@ -66,7 +65,6 @@ cell_t *create_grid(int width, int height)
     cell_t *prev = NULL;
     cell_t *curr = NULL;
 
-    srand(time(NULL));
     for (int i = 0; i < height; i++) {
         head = create_cell();
         curr = head;
