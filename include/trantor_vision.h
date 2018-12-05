@@ -12,6 +12,6 @@ char *look_up(player_t *player);
 char *look_down(player_t *player);
 char *look_left(player_t *player);
 char *look_right(player_t *player);
-void look(player_t *player);
+void look(player_t *player, int sockfd);
 
 #endif /* !TRANTOR_VISION_H_ */

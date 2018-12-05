@@ -10,6 +10,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "trantor_elements.h"
 #include "trantor_resources.h"
 
@@ -29,59 +30,56 @@ player_t create_player(cell_t *top_left, int height, int width)
         new_player.position->resources.food = 1;
     new_player.position->players += 1;
     new_player.front_cell = pos->up;
-    new_player.up = 1;
-    new_player.down = 0;
-    new_player.left = 0;
-    new_player.right = 0;
+    new_player.look = 0;
     new_player.inventory = create_inventory();
     return (new_player);
 }
 
 void rotate_left(player_t *player)
 {
-    if (player->up == 1) {
-        player->up = 0;
-        player->left = 1;
+    if (player->look == UP) {
+        player->look = LEFT;
         player->front_cell = (player->position)->left;
+        return;
     }
-    if (player->down == 1) {
-        player->down = 0;
-        player->right = 1;
+    if (player->look == DOWN) {
+        player->look = RIGHT;
         player->front_cell = (player->position)->right;
+        return;
     }
-    if (player->left == 1) {
-        player->left = 0;
-        player->down = 1;
+    if (player->look == LEFT) {
+        player->look = DOWN;
         player->front_cell = (player->position)->down;
+        return;
     }
-    if (player->right == 1) {
-        player->right = 0;
-        player->up = 1;
+    if (player->look == RIGHT) {
+        player->look = UP;
         player->front_cell = (player->position)->up;
+        return;
     }
 }
 
 void rotate_right(player_t *player)
 {
-    if (player->up == 1) {
-        player->up = 0;
-        player->right = 1;
+    if (player->look == UP) {
+        player->look = RIGHT;
         player->front_cell = (player->position)->right;
+        return;
     }
-    if (player->down == 1) {
-        player->down = 0;
-        player->left = 1;
+    if (player->look == DOWN) {
+        player->look = LEFT;
         player->front_cell = (player->position)->left;
+        return;
     }
-    if (player->left == 1) {
-        player->left = 0;
-        player->up = 1;
+    if (player->look == LEFT) {
+        player->look = UP;
         player->front_cell = (player->position)->up;
+        return;
     }
-    if (player->right == 1) {
-        player->right = 0;
-        player->down = 1;
+    if (player->look == RIGHT) {
+        player->look = DOWN;
         player->front_cell = (player->position)->down;
+        return;
     }
 }
 
@@ -90,17 +88,17 @@ void move_forward(player_t *player)
     player->position->players -= 1;
     player->position = player->front_cell;
     player->position->players += 1;
-    if (player->up == 1)
+    if (player->look == UP)
         player->front_cell = (player->position)->up;
-    if (player->down == 1)
-        player->front_cell = (player->position)->down;
-    if (player->left == 1)
-        player->front_cell = (player->position)->left;
-    if (player->right == 1)
+    if (player->look == RIGHT)
         player->front_cell = (player->position)->right;
+    if (player->look == DOWN)
+        player->front_cell = (player->position)->down;
+    if (player->look == LEFT)
+        player->front_cell = (player->position)->left;
 }
 
-void display_inventory(player_t *player)
+void display_inventory(player_t *player, int sockfd)
 {
     char *result = calloc(2, sizeof(char));
     char *temp;
@@ -119,6 +117,7 @@ void display_inventory(player_t *player)
         else
             result = strcat(result, " ]");
     }
+    write(sockfd, result, strlen(result));
     //printf("%s\n", result);
     free(result);
 }

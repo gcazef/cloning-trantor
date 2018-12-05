@@ -17,9 +17,13 @@ int check_cmd(char *client_message, player_t *player)
     strtok(comp, " ");
     while (i < 7){
         if (strcmp(cmd_names[i], comp) == 0){
-            if (i < 5) {
+            if (i < 3) {
                 (no_arg_cmd[i])(player);
                 return 0;
+            }
+            else if ((i >= 3) && (i < 5)) {
+                (socket_cmd[i-3])(player, player->socket_fd);
+                return (0);
             }
             else 
                 return((arg_cmd[i-5])(player, &client_message[strlen(comp) + 1]));

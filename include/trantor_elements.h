@@ -33,13 +33,17 @@ typedef struct cell {
     pthread_mutex_t res_mutex[7];
 } cell_t;
 
+typedef enum look {
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT
+} look_t;
+
 typedef struct player {
     cell_t *position;
     cell_t *front_cell;
-    int up;
-    int down;
-    int left;
-    int right;
+    look_t look;
     resource_t inventory;
     int socket_fd;
 } player_t;
@@ -58,7 +62,8 @@ typedef struct args {
 
 char const *resource_names[7];
 char const *cmd_names[7];
-void (*no_arg_cmd[5])(player_t *player);
+void (*no_arg_cmd[3])(player_t *player);
+void (*socket_cmd[2])(player_t *player, int sockfd);
 int (*arg_cmd[2])(player_t *player, char *name);
 
 #endif /* !TRANTOR_ELEMENTS_H_ */

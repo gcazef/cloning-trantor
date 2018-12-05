@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "trantor_elements.h"
 #include "trantor_resources.h"
 
@@ -111,18 +112,18 @@ char *look_right(player_t *player)
     return (result);
 }
 
-void look(player_t *player)
+void look(player_t *player, int sockfd)
 {
     char *result;
 
-    if (player->up == 1)
+    if (player->look == UP)
         result = look_up(player);
-    if (player->down == 1)
+    if (player->look == DOWN)
         result = look_down(player);
-    if (player->left == 1)
+    if (player->look == LEFT)
         result = look_left(player);
-    if (player->right == 1)
-        result = look_left(player);
-    //printf("%s\n", result);
+    if (player->look == RIGHT)
+        result = look_right(player);
+    write(sockfd, result, strlen(result));
     free(result);
 }

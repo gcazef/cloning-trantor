@@ -32,11 +32,15 @@ char const *cmd_names[7] =
     "drop"
 };
 
-void (*no_arg_cmd[5])(player_t *player) = 
+void (*no_arg_cmd[3])(player_t *player) = 
 {
     move_forward,
     rotate_left,
-    rotate_right,
+    rotate_right
+};
+
+void (*socket_cmd[2])(player_t *player, int sockfd) = 
+{
     look,
     display_inventory
 };
