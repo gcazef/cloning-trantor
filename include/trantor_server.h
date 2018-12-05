@@ -20,10 +20,9 @@
 #include <string.h>
 #include <pthread.h>
 
-int create_socket(int port, struct sockaddr_in server);
-pthread_t init_conn(struct sockaddr_in client, int my_socket, grid_t grid);
 void *connection_handler(void *player);
-int checkcommand(char *client_message);
+int create_socket(int port, struct sockaddr_in server);
+pthread_t init_conn(struct sockaddr_in client, int s_sckt, grid_t grid);
 int trantor_server(int port, grid_t grid);
 
 #endif
