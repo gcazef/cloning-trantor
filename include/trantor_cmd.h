@@ -8,6 +8,6 @@
 #ifndef TRANTOR_CMD_H_
 #define TRANTOR_CMD_H_
 
-int check_cmd(char *client_message);
+int check_cmd(char *client_message, player_t *player);
 
 #endif /* !TRANTOR_CMD_H_ */

@@ -123,6 +123,6 @@ void look(player_t *player)
         result = look_left(player);
     if (player->right == 1)
         result = look_left(player);
-    printf("%s\n", result);
+    //printf("%s\n", result);
     free(result);
 }

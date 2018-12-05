@@ -30,14 +30,14 @@
 
 void *connection_handler(void *player)
 {
-    player_t p = *(player_t *) player;
-    int sock = p.socket_fd;
+    player_t *p = (player_t *) player;
+    int sock = p->socket_fd;
     int read_size;
     char client_message[2000];
     
     while ((read_size = recv(sock, client_message, 2000, 0)) > 0) {
         client_message[read_size] = '\0';
-        if (check_cmd(client_message) == 1)
+        if (check_cmd(client_message, p) == 1)
             write(sock, "ok\n", 4);
         else
             write(sock, "ko\n", 4);
@@ -45,7 +45,7 @@ void *connection_handler(void *player)
             read_size = 0;
             break;
         }
-        printf("%s", client_message);
+        //printf("%s", client_message);
         memset(client_message, 0, 2000);
     }
     close(sock);

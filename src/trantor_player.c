@@ -119,6 +119,6 @@ void display_inventory(player_t *player)
         else
             result = strcat(result, " ]");
     }
-    printf("%s\n", result);
+    //printf("%s\n", result);
     free(result);
 }
