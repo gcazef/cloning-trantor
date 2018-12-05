@@ -12,42 +12,32 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <string.h>
 #include <pthread.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <errno.h>
 #include "trantor_world.h"
 #include "trantor_player.h"
 #include "trantor_vision.h"
 #include "trantor_resources.h"
 #include "trantor_server.h"
+#include "trantor_cmd.h"
 
-int checkcommand(char *client_message)
-{
-    int i = 0;
-    char *command[8] = {"forward\n", "left\n", "right\n", "look\n",
-        "inventory\n", "take", "drop", "exit\n"};
-    char *comp = strdup(client_message);
-    strtok(comp, " ");
-    while (i < 8){
-        if (strcmp(command[i], comp) == 0)
-            return (1);
-        else
-            i++;
-    }
-    return (0);
-}
+#define ADDR "127.0.0.1"
+#define MAX_CO 1000
 
-void *connection_handler(void *my_socket)
+void *connection_handler(void *player)
 {
-    int sock = *(int*) my_socket;
+    player_t p = *(player_t *) player;
+    int sock = p.socket_fd;
     int read_size;
     char client_message[2000];
+    
     while ((read_size = recv(sock, client_message, 2000, 0)) > 0) {
         client_message[read_size] = '\0';
-        if (checkcommand(client_message) == 1)
+        if (check_cmd(client_message) == 1)
             write(sock, "ok\n", 4);
         else
             write(sock, "ko\n", 4);
@@ -62,69 +52,66 @@ void *connection_handler(void *my_socket)
     return 0;
 }
 
-int create_socket(int port, struct sockaddr_in sin, char *addr)
+int create_socket(int port, struct sockaddr_in server)
 {
     int server_socket;
+    int conn;
+    
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
-    printf("Socket created\n");
-    sin.sin_family = AF_INET;
-    sin.sin_port = htons(port);
-    sin.sin_addr.s_addr = inet_addr(addr);
-    int connection_status = bind(server_socket, (struct sockaddr *) &sin,
-    sizeof(sin));
-    if (connection_status == -1){
-        printf("There was an error making a connection to the remote socket");
-        return (connection_status);
+    if (server_socket == -1){
+        perror("There was an error creating socket");
+        return (84);
     }
-    printf("Bind success\n");
-    listen(server_socket, 3000);
-    printf("Waiting for connection\n");
+    server.sin_family = AF_INET;
+    server.sin_port = htons(port);
+    server.sin_addr.s_addr = inet_addr(ADDR);
+    conn = bind(server_socket, (struct sockaddr *) &server, sizeof(server));
+    if (conn == -1){
+        perror("There was an error making a connection to the remote socket");
+        return (84);
+    }
+    listen(server_socket, MAX_CO);
     return (server_socket);
 }
 
-int handling(struct sockaddr_in client, int my_socket)
+pthread_t init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
 {
-    int new_socket;
-    int cli_len = sizeof(client);
+    int c_sckt;
+    socklen_t cli_len;
     pthread_t thread_id;
-    while ((new_socket = accept(my_socket,
-    (struct sockaddr *)&client, (socklen_t*)&cli_len))) {
-        printf("Connection accepted\n");
-        if (pthread_create(&thread_id, NULL,
-        connection_handler, (void*) &new_socket) < 0){
-            perror("could not create thread");
-            return 1;
-        }
-        printf("Handler assigned\n");
+    player_t p;
+    
+    c_sckt = accept(s_sckt, (struct sockaddr *)&client, &cli_len);
+        if (c_sckt == -1) {
+        perror("Could not accept connection");
+        return (84);
     }
-    if (new_socket < 0) {
-        perror("accept failed");
+    p = create_player(grid.top_left, grid.height, grid.width);
+    p.socket_fd = c_sckt;
+    if (pthread_create(&thread_id, NULL, connection_handler, (void*)&p) < 0) {
+        perror("Could not create thread");
+        return (84);
     }
-    return new_socket;
+    return (thread_id);
 }
 
-int trantor_server(char *ip, int port)
+int trantor_server(int port, grid_t grid)
 {
-    //int client_socket;
     int my_socket;
-    //int cli_len;
-    struct sockaddr_in sin;
+    int nb_threads = 0;
+    pthread_t threads[MAX_CO];
+    struct sockaddr_in server;
     struct sockaddr_in client;
-    //cell_t *top_left = create_grid(10, 10);
-    cell_t *top_left = create_grid(10, 10);
-    player_t p = create_player("squad", top_left, 10, 10);
 
-
-    my_socket = create_socket(port, sin, ip);
-    if (my_socket == 0)
-        return (0);
-    handling(client, my_socket);
+    my_socket = create_socket(port, server);
+    if (my_socket == 84)
+        return (84);
+    while (1) {
+        threads[nb_threads] = init_conn(client, my_socket, grid);
+        nb_threads++;
+    }
+    for (int i = 0; i < nb_threads; i++) {
+        pthread_join(threads[i], NULL);
+    }
     return (0);
 }
-/*
-{
-    server(argc, argv[1], atoi(argv[2]));
-    return (0);
-int main(int argc, char **argv)
-}
-*/

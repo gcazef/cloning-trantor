@@ -20,10 +20,10 @@
 #include <string.h>
 #include <pthread.h>
 
-int trantor_server(char *ip, int port);
-int handling(struct sockaddr_in client, int my_socket);
-int create_socket(int port, struct sockaddr_in sin, char *addr);
-void *connection_handler(void *my_socket);
+int create_socket(int port, struct sockaddr_in server);
+pthread_t init_conn(struct sockaddr_in client, int my_socket, grid_t grid);
+void *connection_handler(void *player);
 int checkcommand(char *client_message);
+int trantor_server(int port, grid_t grid);
 
 #endif

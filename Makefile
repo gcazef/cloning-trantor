@@ -10,6 +10,8 @@ SRC =	src/trantor_elements.c\
 		src/trantor_vision.c\
 		src/trantor_world.c\
 		src/trantor_player.c\
+		src/trantor_server.c\
+		src/trantor_cmd.c\
 		src/trantor.c\
 		src/main.c
 

@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include "trantor_elements.h"
 #include "trantor_resources.h"
 
@@ -110,7 +111,7 @@ char *look_right(player_t *player)
     return (result);
 }
 
-int look(player_t *player)
+void look(player_t *player)
 {
     char *result;
 
@@ -124,5 +125,4 @@ int look(player_t *player)
         result = look_left(player);
     printf("%s\n", result);
     free(result);
-    return (0);
 }

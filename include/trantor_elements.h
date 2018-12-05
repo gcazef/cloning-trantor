@@ -10,11 +10,6 @@
 
 #include <pthread.h>
 
-char const *resource_names[7];
-char const *cmd_names[7];
-int const (*no_arg_cmd[5])(player_t *player);
-int const (*arg_cmd[2])(player_t *player, char *name);
-
 typedef union {
     struct {
         int food;
@@ -46,7 +41,6 @@ typedef struct player {
     int left;
     int right;
     resource_t inventory;
-    char *team;
     int socket_fd;
 } player_t;
 
@@ -61,5 +55,10 @@ typedef struct args {
     int width;
     int port;
 } args_t;
+
+char const *resource_names[7];
+char const *cmd_names[7];
+void (*no_arg_cmd[5])(player_t *player);
+int (*arg_cmd[2])(player_t *player, char *name);
 
 #endif /* !TRANTOR_ELEMENTS_H_ */

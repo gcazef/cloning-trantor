@@ -12,6 +12,7 @@
 #include <time.h>
 #include "trantor_world.h"
 #include "trantor_elements.h"
+#include "trantor_server.h"
 
 void print_usage(void)
 {
@@ -53,6 +54,7 @@ int trantor(int ac, char **av)
     grid.height = args.height;
     grid.width = args.width;
     grid.top_left = create_grid(grid.width, grid.height);
+    trantor_server(args.port, grid);
     destroy_grid(grid.top_left);
     return (0);
 }

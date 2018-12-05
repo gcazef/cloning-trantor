@@ -23,16 +23,16 @@ char const *resource_names[7] =
 
 char const *cmd_names[7] = 
 {
-    "forward",
-    "left",
-    "right",
-    "look",
-    "inventory",
+    "forward\n",
+    "left\n",
+    "right\n",
+    "look\n",
+    "inventory\n",
     "take",
     "drop"
 };
 
-int const (*no_arg_cmd[5])(player_t *player) = 
+void (*no_arg_cmd[5])(player_t *player) = 
 {
     move_forward,
     rotate_left,
@@ -41,7 +41,7 @@ int const (*no_arg_cmd[5])(player_t *player) =
     display_inventory
 };
 
-int const (*arg_cmd[2])(player_t *player, char *name) = 
+int (*arg_cmd[2])(player_t *player, char *name) = 
 {
     take_resource,
     drop_resource

@@ -13,7 +13,7 @@
 #include "trantor_elements.h"
 #include "trantor_resources.h"
 
-player_t create_player(char *team, cell_t *top_left, int height, int width)
+player_t create_player(cell_t *top_left, int height, int width)
 {
     player_t new_player;
     cell_t *pos = top_left;
@@ -33,7 +33,6 @@ player_t create_player(char *team, cell_t *top_left, int height, int width)
     new_player.down = 0;
     new_player.left = 0;
     new_player.right = 0;
-    new_player.team = team;
     new_player.inventory = create_inventory();
     return (new_player);
 }
@@ -86,7 +85,7 @@ void rotate_right(player_t *player)
     }
 }
 
-int move_forward(player_t *player)
+void move_forward(player_t *player)
 {
     player->position->players -= 1;
     player->position = player->front_cell;
@@ -99,10 +98,9 @@ int move_forward(player_t *player)
         player->front_cell = (player->position)->left;
     if (player->right == 1)
         player->front_cell = (player->position)->right;
-    return (0);
 }
 
-int display_inventory(player_t *player)
+void display_inventory(player_t *player)
 {
     char *result = calloc(2, sizeof(char));
     char *temp;
@@ -123,5 +121,4 @@ int display_inventory(player_t *player)
     }
     printf("%s\n", result);
     free(result);
-    return (0);
 }
