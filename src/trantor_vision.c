@@ -124,6 +124,6 @@ void look(player_t *player, int sockfd)
         result = look_left(player);
     if (player->look == RIGHT)
         result = look_right(player);
-    write(sockfd, result, strlen(result));
+    dprintf(sockfd, "%s\n", result);
     free(result);
 }

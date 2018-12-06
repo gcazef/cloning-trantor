@@ -10,21 +10,19 @@
 
 int check_cmd(char *client_message, player_t *player)
 {
-    int i = 0;
-    
     char *comp = strdup(client_message);
     char *item;
 
     strtok(comp, " ");
-    while (i < 7){
+    for (int i = 0; i < 7; i++) {
         if (strcmp(cmd_names[i], comp) == 0){
             if (i < 3) {
                 (no_arg_cmd[i])(player);
-                return 0;
+                return (0);
             }
             else if ((i >= 3) && (i < 5)) {
                 (socket_cmd[i-3])(player, player->socket_fd);
-                return (0);
+                return (1);
             }
             else {
                 item = &client_message[strlen(comp) + 1];
@@ -32,8 +30,6 @@ int check_cmd(char *client_message, player_t *player)
                 return((arg_cmd[i-5])(player, item));
             }
         }
-        else
-            i++;
     }
-    return (1);
+    return (84);
 }

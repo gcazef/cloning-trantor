@@ -71,10 +71,10 @@ int drop_resource(player_t *player, char *name)
         return (84);
     present = (player->inventory).res[i - 1];
     if (present > 0) {
-        //pthread_mutex_lock(&(pos->res_mutex[i - 1]));
+        pthread_mutex_lock(&(pos->res_mutex));
         (player->inventory).res[i - 1] -= 1;
         (pos->resources).res[i - 1] += 1;
-        //pthread_mutex_unlock(&(pos->res_mutex[i - 1]));
+        pthread_mutex_unlock(&(pos->res_mutex));
         return (0);
     }
     return (84);
@@ -95,10 +95,10 @@ int take_resource(player_t *player, char *name)
         return (84);
     present = (pos->resources).res[i - 1];
     if (present > 0) {
-        //pthread_mutex_lock(&(pos->res_mutex[i - 1]));
+        pthread_mutex_lock(&(pos->res_mutex));
         (player->inventory).res[i - 1] += 1;
         (pos->resources).res[i - 1] -= 1;
-        //pthread_mutex_unlock(&(pos->res_mutex[i - 1]));
+        pthread_mutex_unlock(&(pos->res_mutex));
         return (0);
     }
     return (84);

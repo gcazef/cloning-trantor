@@ -18,6 +18,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <signal.h>
 #include "trantor_world.h"
 #include "trantor_player.h"
 #include "trantor_vision.h"
@@ -28,26 +29,27 @@
 #define ADDR "127.0.0.1"
 #define MAX_CO 1000
 
+static grid_t grid_entry;
+
 void *connection_handler(void *player)
 {
     player_t *p = (player_t *) player;
     int sock = p->socket_fd;
     int read_size;
     char client_message[2000];
+
+    dprintf(sock, "WELCOME\n");
+    read(sock, client_message, 2000);
+    printf(client_message);
+    dprintf(sock, "1\n%d %d\n", grid_entry.width, grid_entry.height);
     
-    while ((read_size = recv(sock, client_message, 2000, 0)) > 0) {
+    while ((read_size = read(sock, client_message, 2000)) > 0) {
         client_message[read_size] = '\0';
-        if (check_cmd(client_message, p) == 1) {
+        if (check_cmd(client_message, p) == 0) {
             write(sock, "ok\n", 4);
         }
         else
             write(sock, "ko\n", 4);
-        printf("%d\n", sock);
-        if (strcmp("exit\n", client_message) == 0) {
-            read_size = 0;
-            break;
-        }
-        //printf("%s", client_message);
         memset(client_message, 0, 2000);
     }
     free(p);
@@ -105,12 +107,13 @@ int trantor_server(int port, grid_t grid)
     pthread_t threads[MAX_CO];
     struct sockaddr_in server;
     struct sockaddr_in client;
-    char command[10];
 
+    grid_entry = grid;
+    signal(SIGINT, signal_handler);
     my_socket = create_socket(port, server);
     if (my_socket == 84)
         return (84);
-    while (fgets(command, 10, stdin) != NULL) {
+    while (1) {
         threads[nb_threads] = init_conn(client, my_socket, grid);
         nb_threads++;
     }
@@ -118,4 +121,10 @@ int trantor_server(int port, grid_t grid)
         pthread_join(threads[i], NULL);
     }
     return (0);
+}
+
+void signal_handler()
+{
+    destroy_grid(grid_entry.top_left);
+    exit(0);
 }

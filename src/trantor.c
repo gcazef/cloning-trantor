@@ -40,6 +40,7 @@ args_t parse_args(int ac, char **av)
                 break;
             default:
                 print_usage();
+                exit(1);
         }
     }
     return (result);

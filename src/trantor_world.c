@@ -21,9 +21,7 @@ cell_t *create_cell(void)
     new_cell->right = NULL;
     new_cell->players = 0;
     new_cell->resources = generate_resource();
-    /*for (int i = 0; i < 7; i++)
-        pthread_mutex_init(&(new_cell->res_mutex[i]), NULL);
-        */
+    pthread_mutex_init(&(new_cell->res_mutex), NULL);
     return (new_cell);
 }
 
