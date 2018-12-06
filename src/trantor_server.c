@@ -37,18 +37,18 @@ void *connection_handler(void *player)
     int sock = p->socket_fd;
     int read_size;
     char client_message[2000];
-
+/*
     dprintf(sock, "WELCOME\n");
     read(sock, client_message, 2000);
     printf(client_message);
     dprintf(sock, "1\n%d %d\n", grid_entry.width, grid_entry.height);
-    
+*/  
     while ((read_size = read(sock, client_message, 2000)) > 0) {
         client_message[read_size] = '\0';
         if (check_cmd(client_message, p) == 0) {
             write(sock, "ok\n", 4);
         }
-        else
+        else if (check_cmd(client_message, p) == 84)
             write(sock, "ko\n", 4);
         memset(client_message, 0, 2000);
     }
