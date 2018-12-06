@@ -37,10 +37,12 @@ void *connection_handler(void *player)
     
     while ((read_size = recv(sock, client_message, 2000, 0)) > 0) {
         client_message[read_size] = '\0';
-        if (check_cmd(client_message, p) == 1)
+        if (check_cmd(client_message, p) == 1) {
             write(sock, "ok\n", 4);
+        }
         else
             write(sock, "ko\n", 4);
+        printf("%d\n", sock);
         if (strcmp("exit\n", client_message) == 0) {
             read_size = 0;
             break;
@@ -48,6 +50,7 @@ void *connection_handler(void *player)
         //printf("%s", client_message);
         memset(client_message, 0, 2000);
     }
+    free(p);
     close(sock);
     return 0;
 }
@@ -79,7 +82,7 @@ pthread_t init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
     int c_sckt;
     socklen_t cli_len;
     pthread_t thread_id;
-    player_t p;
+    player_t *p;
     
     c_sckt = accept(s_sckt, (struct sockaddr *)&client, &cli_len);
         if (c_sckt == -1) {
@@ -87,8 +90,8 @@ pthread_t init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
         return (84);
     }
     p = create_player(grid.top_left, grid.height, grid.width);
-    p.socket_fd = c_sckt;
-    if (pthread_create(&thread_id, NULL, connection_handler, (void*)&p) < 0) {
+    p->socket_fd = c_sckt;
+    if (pthread_create(&thread_id, NULL, connection_handler, (void*)p) < 0) {
         perror("Could not create thread");
         return (84);
     }
@@ -102,11 +105,12 @@ int trantor_server(int port, grid_t grid)
     pthread_t threads[MAX_CO];
     struct sockaddr_in server;
     struct sockaddr_in client;
+    char command[10];
 
     my_socket = create_socket(port, server);
     if (my_socket == 84)
         return (84);
-    while (1) {
+    while (fgets(command, 10, stdin) != NULL) {
         threads[nb_threads] = init_conn(client, my_socket, grid);
         nb_threads++;
     }

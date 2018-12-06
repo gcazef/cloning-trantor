@@ -20,6 +20,7 @@
 #include <string.h>
 #include <pthread.h>
 
+void signal_handler();
 void *connection_handler(void *player);
 int create_socket(int port, struct sockaddr_in server);
 pthread_t init_conn(struct sockaddr_in client, int s_sckt, grid_t grid);

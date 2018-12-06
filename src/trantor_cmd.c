@@ -13,6 +13,7 @@ int check_cmd(char *client_message, player_t *player)
     int i = 0;
     
     char *comp = strdup(client_message);
+    char *item;
 
     strtok(comp, " ");
     while (i < 7){
@@ -25,8 +26,11 @@ int check_cmd(char *client_message, player_t *player)
                 (socket_cmd[i-3])(player, player->socket_fd);
                 return (0);
             }
-            else 
-                return((arg_cmd[i-5])(player, &client_message[strlen(comp) + 1]));
+            else {
+                item = &client_message[strlen(comp) + 1];
+                strtok(item, "\n");
+                return((arg_cmd[i-5])(player, item));
+            }
         }
         else
             i++;

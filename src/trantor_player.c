@@ -14,9 +14,9 @@
 #include "trantor_elements.h"
 #include "trantor_resources.h"
 
-player_t create_player(cell_t *top_left, int height, int width)
+player_t *create_player(cell_t *top_left, int height, int width)
 {
-    player_t new_player;
+    player_t *new_player = malloc(sizeof(player_t));
     cell_t *pos = top_left;
 
     int posX = rand() % width;
@@ -25,13 +25,13 @@ player_t create_player(cell_t *top_left, int height, int width)
         pos = pos->right;
     for (int i = 0; i < posY; i++)
         pos = pos->down;
-    new_player.position = pos;
-    if (new_player.position->resources.food == 0)
-        new_player.position->resources.food = 1;
-    new_player.position->players += 1;
-    new_player.front_cell = pos->up;
-    new_player.look = 0;
-    new_player.inventory = create_inventory();
+    new_player->position = pos;
+    if (new_player->position->resources.food == 0)
+        new_player->position->resources.food = 1;
+    new_player->position->players += 1;
+    new_player->front_cell = pos->up;
+    new_player->look = 0;
+    new_player->inventory = create_inventory();
     return (new_player);
 }
 

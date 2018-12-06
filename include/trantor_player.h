@@ -8,7 +8,7 @@
 #ifndef TRANTOR_PLAYER_H_
 #define TRANTOR_PLAYER_H_
 
-player_t create_player(cell_t *top_left, int height, int width);
+player_t *create_player(cell_t *top_left, int height, int width);
 void rotate_left(player_t *player);
 void rotate_right(player_t *player);
 void move_forward(player_t *player);
