@@ -8,6 +8,8 @@
 #ifndef TRANTOR_CMD_H_
 #define TRANTOR_CMD_H_
 
+int send_resp(int sockfd, int cmd_val);
+int read_buffer(int sockfd, char *result);
 int check_cmd(char *client_message, player_t *player);
 
 #endif /* !TRANTOR_CMD_H_ */

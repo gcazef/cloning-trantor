@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include <unistd.h>
 #include "trantor_elements.h"
 #include "trantor_resources.h"
 

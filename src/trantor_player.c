@@ -10,7 +10,6 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdio.h>
-#include <unistd.h>
 #include "trantor_elements.h"
 #include "trantor_resources.h"
 
@@ -117,7 +116,6 @@ void display_inventory(player_t *player, int sockfd)
         else
             result = strcat(result, " ]");
     }
-    write(sockfd, result, strlen(result));
-    //printf("%s\n", result);
+    dprintf(sockfd, "%s\n", result);
     free(result);
 }

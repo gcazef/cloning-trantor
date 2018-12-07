@@ -28,33 +28,33 @@
 
 #define ADDR "127.0.0.1"
 #define MAX_CO 1000
+#define BUFF_SIZE 2048
 
 static grid_t grid_entry;
 
 void *connection_handler(void *player)
 {
     player_t *p = (player_t *) player;
-    int sock = p->socket_fd;
-    int read_size;
-    char client_message[2000];
-/*
-    dprintf(sock, "WELCOME\n");
-    read(sock, client_message, 2000);
-    printf(client_message);
-    dprintf(sock, "1\n%d %d\n", grid_entry.width, grid_entry.height);
-*/  
-    while ((read_size = read(sock, client_message, 2000)) > 0) {
+    int read_size = 0;
+    char client_message[BUFF_SIZE];
+    int cmd_val;
+
+    dprintf(p->socket_fd, "WELCOME\n");
+    read(p->socket_fd, client_message, BUFF_SIZE);
+    memset(client_message, 0, BUFF_SIZE);
+    dprintf(p->socket_fd, "1\n%d %d\n", grid_entry.width, grid_entry.height);
+    while ((read_size = read_buffer(p->socket_fd, client_message)) > 0) {
         client_message[read_size] = '\0';
-        if (check_cmd(client_message, p) == 0) {
-            write(sock, "ok\n", 4);
-        }
-        else if (check_cmd(client_message, p) == 84)
-            write(sock, "ko\n", 4);
-        memset(client_message, 0, 2000);
+        cmd_val = check_cmd(client_message, p);
+        if (send_resp(p->socket_fd, cmd_val) < 0)
+            break;
+        if (cmd_val < 0)
+            break;
+        memset(client_message, 0, BUFF_SIZE);
     }
+    close(p->socket_fd);
     free(p);
-    close(sock);
-    return 0;
+    pthread_exit(NULL);
 }
 
 int create_socket(int port, struct sockaddr_in server)
