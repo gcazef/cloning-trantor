@@ -10,6 +10,7 @@
 
 int send_resp(int sockfd, int cmd_val);
 int read_buffer(int sockfd, char *result);
+int send_cmd(int indice, char *item, player_t *player);
 int check_cmd(char *client_message, player_t *player);
 
 #endif /* !TRANTOR_CMD_H_ */

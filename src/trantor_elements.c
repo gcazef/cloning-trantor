@@ -21,7 +21,7 @@ char const *resource_names[7] =
     "thystame"
 };
 
-char const *cmd_names[7] = 
+char const *cmd_names[7] =
 {
     "forward\n",
     "left\n",
@@ -32,20 +32,20 @@ char const *cmd_names[7] =
     "drop"
 };
 
-void (*no_arg_cmd[3])(player_t *player) = 
+void (*no_arg_cmd[3])(player_t *player) =
 {
     move_forward,
     rotate_left,
     rotate_right
 };
 
-void (*socket_cmd[2])(player_t *player, int sockfd) = 
+void (*socket_cmd[2])(player_t *player, int sockfd) =
 {
     look,
     display_inventory
 };
 
-int (*arg_cmd[2])(player_t *player, char *name) = 
+int (*arg_cmd[2])(player_t *player, char *name) =
 {
     take_resource,
     drop_resource

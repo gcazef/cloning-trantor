@@ -21,7 +21,7 @@ CC =	gcc
 
 INC =	-I./include
 
-CFLAGS =	-W -Wall -Wextra -Werror -lpthread $(INC)
+CFLAGS =	-W -Wall -Wextra -Werror -Wshadow -lpthread $(INC)
 
 NAME =	trantor_v1
 

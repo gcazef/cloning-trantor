@@ -44,7 +44,6 @@ void *connection_handler(void *player)
     memset(client_message, 0, BUFF_SIZE);
     dprintf(p->socket_fd, "1\n%d %d\n", grid_entry.width, grid_entry.height);
     while ((read_size = read_buffer(p->socket_fd, client_message)) > 0) {
-        client_message[read_size] = '\0';
         cmd_val = check_cmd(client_message, p);
         if (send_resp(p->socket_fd, cmd_val) < 0)
             break;
@@ -87,7 +86,7 @@ pthread_t init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
     player_t *p;
     
     c_sckt = accept(s_sckt, (struct sockaddr *)&client, &cli_len);
-        if (c_sckt == -1) {
+    if (c_sckt == -1) {
         perror("Could not accept connection");
         return (84);
     }

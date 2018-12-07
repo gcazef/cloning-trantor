@@ -29,18 +29,17 @@ args_t parse_args(int ac, char **av)
         print_usage();
     while ((opt = getopt(ac, av, "w:h:p:")) != -1) {
         switch (opt) {
-            case 'w':
-                result.width = atoi(optarg);
-                break;
-            case 'h':
-                result.height = atoi(optarg);
-                break;
-            case 'p':
-                result.port = atoi(optarg);
-                break;
-            default:
-                print_usage();
-                exit(1);
+        case 'w':
+            result.width = atoi(optarg);
+            break;
+        case 'h':
+            result.height = atoi(optarg);
+            break;
+        case 'p':
+            result.port = atoi(optarg);
+            break;
+        default:
+            print_usage();
         }
     }
     return (result);

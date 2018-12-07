@@ -102,7 +102,7 @@ void display_inventory(player_t *player, int sockfd)
     char *result = calloc(2, sizeof(char));
     char *temp;
     int len = 0;
-    
+
     result[0] = '[';
     for (int i = 0; i < 7; i++) {
         temp = calloc((9 + strlen(resource_names[i])), sizeof(char));
