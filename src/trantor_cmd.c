@@ -11,6 +11,8 @@
 #include <unistd.h>
 #include "trantor_elements.h"
 
+#define BUFF_SIZE 2048
+
 int send_resp(int sockfd, int cmd_val)
 {
     int ret;
@@ -30,6 +32,7 @@ int read_buffer(int sockfd, char *result)
     int read_bytes = 1;
     int i = 0;
 
+    memset(result, 0, BUFF_SIZE);
     while (temp != '\n' && read_bytes > 0) {
         read_bytes = read(sockfd, &temp, 1);
         if (read_bytes <= 0)

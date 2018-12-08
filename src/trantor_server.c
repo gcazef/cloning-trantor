@@ -40,7 +40,7 @@ void *connection_handler(void *player)
     int cmd_val;
 
     dprintf(p->socket_fd, "WELCOME\n");
-    read(p->socket_fd, client_message, BUFF_SIZE);
+    read_buffer(p->socket_fd, client_message);
     memset(client_message, 0, BUFF_SIZE);
     dprintf(p->socket_fd, "1\n%d %d\n", grid_entry.width, grid_entry.height);
     while ((read_size = read_buffer(p->socket_fd, client_message)) > 0) {
