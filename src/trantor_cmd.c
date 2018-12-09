@@ -62,12 +62,15 @@ int send_cmd(int indice, char *item, player_t *player)
 int check_cmd(char *client_message, player_t *player)
 {
     char *comp = strdup(client_message);
+    int item_pos = 0;
 
     strtok(comp, " ");
+    item_pos = strlen(comp) + 1;
     for (int i = 0; i < 7; i++) {
-        if (strcmp(cmd_names[i], comp) == 0)
-            return (send_cmd(i, &client_message[strlen(comp) + 1], player));
+        if (strcmp(cmd_names[i], comp) == 0) {
+            free(comp);
+            return (send_cmd(i, &client_message[item_pos], player));
+        }
     }
-    free(comp);
     return (84);
 }

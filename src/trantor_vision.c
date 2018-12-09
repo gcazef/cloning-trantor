@@ -32,7 +32,6 @@ char *look_up(player_t *player)
         if (i < 3)
             result = strcat(result, ",");
     }
-    result = strcat(result, " ]");
     return (result);
 }
 
@@ -57,7 +56,6 @@ char *look_down(player_t *player)
         if (i < 3)
             result = strcat(result, ",");
     }
-    result = strcat(result, " ]");
     return (result);
 }
 
@@ -82,7 +80,6 @@ char *look_left(player_t *player)
         if (i < 3)
             result = strcat(result, ",");
     }
-    result = strcat(result, " ]");
     return (result);
 }
 
@@ -107,7 +104,6 @@ char *look_right(player_t *player)
         if (i < 3)
             result = strcat(result, ",");
     }
-    result = strcat(result, " ]");
     return (result);
 }
 
@@ -123,6 +119,6 @@ void look(player_t *player, int sockfd)
         result = look_left(player);
     if (player->look == RIGHT)
         result = look_right(player);
-    dprintf(sockfd, "%s\n", result);
+    dprintf(sockfd, "%s ]\n", result);
     free(result);
 }

@@ -39,10 +39,6 @@ void *connection_handler(void *player)
     char client_message[BUFF_SIZE];
     int cmd_val;
 
-    dprintf(p->socket_fd, "WELCOME\n");
-    read_buffer(p->socket_fd, client_message);
-    memset(client_message, 0, BUFF_SIZE);
-    dprintf(p->socket_fd, "1\n%d %d\n", grid_entry.width, grid_entry.height);
     while ((read_size = read_buffer(p->socket_fd, client_message)) > 0) {
         cmd_val = check_cmd(client_message, p);
         if (send_resp(p->socket_fd, cmd_val) < 0)
@@ -51,8 +47,10 @@ void *connection_handler(void *player)
             break;
         memset(client_message, 0, BUFF_SIZE);
     }
+    p->position->players -= 1;
     close(p->socket_fd);
     free(p);
+    pthread_detach(pthread_self());
     pthread_exit(NULL);
 }
 
@@ -78,12 +76,13 @@ int create_socket(int port, struct sockaddr_in server)
     return (server_socket);
 }
 
-pthread_t init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
+int init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
 {
     int c_sckt;
     socklen_t cli_len;
     pthread_t thread_id;
     player_t *p;
+    char client_message[BUFF_SIZE];
     
     c_sckt = accept(s_sckt, (struct sockaddr *)&client, &cli_len);
     if (c_sckt == -1) {
@@ -92,18 +91,20 @@ pthread_t init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
     }
     p = create_player(grid.top_left, grid.height, grid.width);
     p->socket_fd = c_sckt;
+    dprintf(p->socket_fd, "WELCOME\n");
+    read_buffer(p->socket_fd, client_message);
+    dprintf(p->socket_fd, "1\n%d %d\n", grid_entry.width, grid_entry.height);
     if (pthread_create(&thread_id, NULL, connection_handler, (void*)p) < 0) {
         perror("Could not create thread");
         return (84);
     }
-    return (thread_id);
+    return (0);
 }
 
 int trantor_server(int port, grid_t grid)
 {
     int my_socket;
     int nb_threads = 0;
-    pthread_t threads[MAX_CO];
     struct sockaddr_in server;
     struct sockaddr_in client;
 
@@ -113,11 +114,8 @@ int trantor_server(int port, grid_t grid)
     if (my_socket == 84)
         return (84);
     while (1) {
-        threads[nb_threads] = init_conn(client, my_socket, grid);
+        init_conn(client, my_socket, grid);
         nb_threads++;
-    }
-    for (int i = 0; i < nb_threads; i++) {
-        pthread_join(threads[i], NULL);
     }
     return (0);
 }
