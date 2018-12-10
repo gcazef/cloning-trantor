@@ -113,9 +113,7 @@ void display_inventory(player_t *player, int sockfd)
         free(temp);
         if (i < 6)
             result = strcat(result, ",");
-        else
-            result = strcat(result, " ]");
     }
-    dprintf(sockfd, "%s\n", result);
+    dprintf(sockfd, "%s ]\n", result);
     free(result);
 }

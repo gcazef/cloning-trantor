@@ -15,7 +15,7 @@
 
 int send_resp(int sockfd, int cmd_val)
 {
-    int ret;
+    int ret = 0;
 
     if (cmd_val == 0)
         ret = dprintf(sockfd, "ok\n");

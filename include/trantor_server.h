@@ -8,23 +8,14 @@
 #ifndef TRANTOR_SERVER_H_
 #define TRANTOR_SERVER_H_
 
-#include "trantor_elements.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/socket.h>
-#include <sys/stat.h>
-#include <errno.h>
 #include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <string.h>
-#include <pthread.h>
+#include "trantor_elements.h"
 
 #define ADDR "127.0.0.1"
 #define MAX_CO 1000
 #define BUFF_SIZE 2048
 
-static grid_t grid_entry;
+grid_t grid_entry;
 
 void signal_handler();
 void *connection_handler(void *player);

@@ -6,6 +6,7 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <errno.h>
@@ -14,9 +15,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <stddef.h>
-#include <stdio.h>
 #include <time.h>
-#include <stdlib.h>
 #include <errno.h>
 #include <signal.h>
 #include "trantor_world.h"
@@ -31,7 +30,7 @@ void *connection_handler(void *player)
     player_t *p = (player_t *) player;
     int read_size = 0;
     char client_message[BUFF_SIZE];
-    int cmd_val;
+    int cmd_val = 0;
 
     while ((read_size = read_buffer(p->socket_fd, client_message)) > 0) {
         cmd_val = check_cmd(client_message, p);
@@ -73,7 +72,7 @@ int create_socket(int port, struct sockaddr_in server)
 int init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
 {
     int c_sckt;
-    socklen_t cli_len;
+    socklen_t cli_len = 0;
     pthread_t thread_id;
     player_t *p;
     char client_message[BUFF_SIZE];
