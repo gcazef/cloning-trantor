@@ -20,6 +20,12 @@
 #include <string.h>
 #include <pthread.h>
 
+#define ADDR "127.0.0.1"
+#define MAX_CO 1000
+#define BUFF_SIZE 2048
+
+static grid_t grid_entry;
+
 void signal_handler();
 void *connection_handler(void *player);
 int create_socket(int port, struct sockaddr_in server);

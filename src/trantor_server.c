@@ -26,12 +26,6 @@
 #include "trantor_server.h"
 #include "trantor_cmd.h"
 
-#define ADDR "127.0.0.1"
-#define MAX_CO 1000
-#define BUFF_SIZE 2048
-
-static grid_t grid_entry;
-
 void *connection_handler(void *player)
 {
     player_t *p = (player_t *) player;

@@ -98,7 +98,6 @@ int destroy_grid(cell_t *top_left)
             top_right = top_right->left;
             free(curr);
             curr = top_right->up;
-            
         } else {
             free(curr);
             curr = NULL;
