@@ -51,7 +51,7 @@ int create_socket(int port, struct sockaddr_in server)
 {
     int server_socket;
     int conn;
-    
+
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (server_socket == -1){
         perror("There was an error creating socket");
@@ -76,7 +76,7 @@ int init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
     pthread_t thread_id;
     player_t *p;
     char client_message[BUFF_SIZE];
-    
+
     c_sckt = accept(s_sckt, (struct sockaddr *)&client, &cli_len);
     if (c_sckt == -1) {
         perror("Could not accept connection");

@@ -8,6 +8,8 @@
 #ifndef TRANTOR_CMD_H_
 #define TRANTOR_CMD_H_
 
+#define BUFF_SIZE 2048
+
 int send_resp(int sockfd, int cmd_val);
 int read_buffer(int sockfd, char *result);
 int send_cmd(int indice, char *item, player_t *player);

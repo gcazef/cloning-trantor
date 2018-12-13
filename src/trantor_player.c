@@ -19,7 +19,7 @@ player_t *create_player(cell_t *top_left, int height, int width)
     cell_t *pos = top_left;
     int posX = rand() % width;
     int posY = rand() % height;
-    
+
     for (int i = 0; i < posX; i++)
         pos = pos->right;
     for (int i = 0; i < posY; i++)

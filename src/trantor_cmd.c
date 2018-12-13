@@ -10,8 +10,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "trantor_elements.h"
-
-#define BUFF_SIZE 2048
+#include "trantor_cmd.h"
 
 int send_resp(int sockfd, int cmd_val)
 {
