@@ -113,8 +113,10 @@ int trantor_server(int port, grid_t grid)
     return (0);
 }
 
-void signal_handler()
+void signal_handler(int signo)
 {
-    destroy_grid(grid_entry.top_left);
-    exit(0);
+    if (signo == SIGINT) {
+        destroy_grid(grid_entry.top_left);
+        exit(0);
+    }
 }
