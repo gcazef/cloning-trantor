@@ -37,7 +37,10 @@ int read_buffer(int sockfd, char *result)
         if (read_bytes <= 0)
             return (-1);
         result[i] = temp;
-        i++;
+        if (i >= BUFF_SIZE)
+            i = 0;
+        else
+            i++;
     }
     return (i);
 }
