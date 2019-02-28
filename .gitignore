@@ -5,3 +5,5 @@ trantor_test
 
 #valgrind
 vgcore.*
+
+.vscode
