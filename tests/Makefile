@@ -15,12 +15,9 @@ SRC		=	$(SRC_DIR)trantor_elements.c\
 			$(SRC_DIR)trantor_server.c\
 			$(SRC_DIR)trantor_cmd.c\
 			$(SRC_DIR)trantor.c\
-			test_trantor.c\
-			test_create_grid.c\
-			test_create_cell.c\
-			test_link_lines.c\
-			test_destroy_grid.c\
-			test_create_inventory.c
+			test_trantor_world.c\
+			test_trantor_ressources.c\
+			test_trantor.c
 
 OBJ		=	$(SRC:.c=.o)
 
