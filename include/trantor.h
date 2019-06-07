@@ -11,6 +11,7 @@
 
 void print_usage(void);
 args_t parse_args(int ac, char **av);
+int check_args(args_t *args);
 int trantor(int ac, char **av);
 
 #endif /* !TRANTOR_H_ */

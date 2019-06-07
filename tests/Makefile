@@ -5,28 +5,34 @@
 ## Makefile for trantorian_cli unit tests
 ##
 
-SRC =	../src/trantor_elements.c\
-		../src/trantor_world.c\
-		../src/trantor_resources.c\
-		../src/trantor_vision.c\
-		../src/trantor_player.c\
-		test_create_grid.c\
-		test_create_cell.c\
-		test_link_lines.c\
-		test_destroy_grid.c\
-		test_create_inventory.c
+SRC_DIR	= 	../src/
 
-OBJ = $(SRC:.c=.o)
+SRC		=	$(SRC_DIR)trantor_elements.c\
+			$(SRC_DIR)trantor_resources.c\
+			$(SRC_DIR)trantor_vision.c\
+			$(SRC_DIR)trantor_world.c\
+			$(SRC_DIR)trantor_player.c\
+			$(SRC_DIR)trantor_server.c\
+			$(SRC_DIR)trantor_cmd.c\
+			$(SRC_DIR)trantor.c\
+			test_trantor.c\
+			test_create_grid.c\
+			test_create_cell.c\
+			test_link_lines.c\
+			test_destroy_grid.c\
+			test_create_inventory.c
 
-INC = -I../include
+OBJ		=	$(SRC:.c=.o)
 
-CC = gcc
+INC		=	-I../include
 
-CFLAGS = -W -Wall -Wextra -Werror $(INC)
+CC		=	gcc
 
-LIB = -lcriterion
+CFLAGS	=	-W -Wall -Wextra -Werror -Wshadow -lpthread $(INC)
 
-NAME = trantor_test
+LIB		=	-lcriterion
+
+NAME	=	trantor_test
 
 all: $(NAME)
 

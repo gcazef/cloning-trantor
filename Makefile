@@ -5,25 +5,27 @@
 ## Makefile for cloning trantor
 ##
 
-SRC =	src/trantor_elements.c\
-		src/trantor_resources.c\
-		src/trantor_vision.c\
-		src/trantor_world.c\
-		src/trantor_player.c\
-		src/trantor_server.c\
-		src/trantor_cmd.c\
-		src/trantor.c\
-		src/main.c
+SRC_DIR	= 	./src/
 
-OBJ =	$(SRC:.c=.o)
+SRC 	=	$(SRC_DIR)trantor_elements.c\
+			$(SRC_DIR)trantor_resources.c\
+			$(SRC_DIR)trantor_vision.c\
+			$(SRC_DIR)trantor_world.c\
+			$(SRC_DIR)trantor_player.c\
+			$(SRC_DIR)trantor_server.c\
+			$(SRC_DIR)trantor_cmd.c\
+			$(SRC_DIR)trantor.c\
+			$(SRC_DIR)main.c
 
-CC =	gcc
+OBJ		=	$(SRC:.c=.o)
 
-INC =	-I./include
+CC		=	gcc
 
-CFLAGS =	-W -Wall -Wextra -Werror -Wshadow -lpthread $(INC)
+INC		=	-I./include
 
-NAME =	trantor_v1
+CFLAGS	=	-W -Wall -Wextra -Werror -Wshadow -lpthread $(INC)
+
+NAME	=	trantor_v1
 
 all: $(NAME)
 
@@ -42,7 +44,7 @@ re: fclean all
 thread:
 	$(CC) $(CFLAGS) -fsanitize=thread -o $(NAME) $(OBJ)
 
-test: 
+tests_run:
 	make -C tests
 	./tests/trantor_test
 

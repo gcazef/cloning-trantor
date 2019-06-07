@@ -9,5 +9,7 @@
 
 int main(int argc, char **argv)
 {
-    return (trantor(argc, argv));
+    if (trantor(argc, argv) == -1)
+        return (84);
+    return (0);
 }
