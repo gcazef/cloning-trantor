@@ -107,7 +107,7 @@ char *look_right(player_t *player)
     return (result);
 }
 
-void look(player_t *player, int sockfd)
+void look(player_t *player)
 {
     char *result;
 
@@ -119,6 +119,6 @@ void look(player_t *player, int sockfd)
         result = look_left(player);
     if (player->look == RIGHT)
         result = look_right(player);
-    dprintf(sockfd, "%s ]\n", result);
+    dprintf(player->socket_fd, "%s ]\n", result);
     free(result);
 }

@@ -39,7 +39,7 @@ void (*no_arg_cmd[3])(player_t *player) =
     rotate_right
 };
 
-void (*socket_cmd[2])(player_t *player, int sockfd) =
+void (*socket_cmd[2])(player_t *player) =
 {
     look,
     display_inventory

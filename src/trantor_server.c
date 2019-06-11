@@ -59,8 +59,10 @@ int create_socket(int port, struct sockaddr_in server)
     server.sin_port = htons(port);
     server.sin_addr.s_addr = inet_addr(ADDR);
     conn = bind(server_socket, (struct sockaddr *) &server, sizeof(server));
-    if (conn == -1)
+    if (conn == -1) {
+        close(server_socket);
         return print_error("There was an error connecting to remote socket");
+    }
     listen(server_socket, MAX_CO);
     return (server_socket);
 }
@@ -81,8 +83,10 @@ int init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
     dprintf(p->socket_fd, "WELCOME\n");
     read_buffer(p->socket_fd, client_message);
     dprintf(p->socket_fd, "1\n%d %d\n", grid_entry.width, grid_entry.height);
-    if (pthread_create(&thread_id, NULL, connection_handler, (void*)p) < 0)
+    if (pthread_create(&thread_id, NULL, connection_handler, (void*)p) < 0) {
+        close(c_sckt);
         return print_error("Could not create thread");
+    }
     return (0);
 }
 

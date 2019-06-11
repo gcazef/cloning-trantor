@@ -97,7 +97,7 @@ void move_forward(player_t *player)
         player->front_cell = (player->position)->left;
 }
 
-void display_inventory(player_t *player, int sockfd)
+void display_inventory(player_t *player)
 {
     char *result = calloc(2, sizeof(char));
     char *temp;
@@ -114,6 +114,6 @@ void display_inventory(player_t *player, int sockfd)
         if (i < 6)
             result = strcat(result, ",");
     }
-    dprintf(sockfd, "%s ]\n", result);
+    dprintf(player->socket_fd, "%s ]\n", result);
     free(result);
 }

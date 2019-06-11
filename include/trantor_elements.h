@@ -63,7 +63,7 @@ typedef struct args {
 char const *resource_names[7];
 char const *cmd_names[7];
 void (*no_arg_cmd[3])(player_t *player);
-void (*socket_cmd[2])(player_t *player, int sockfd);
+void (*socket_cmd[2])(player_t *player);
 int (*arg_cmd[2])(player_t *player, char *name);
 
 #endif /* !TRANTOR_ELEMENTS_H_ */

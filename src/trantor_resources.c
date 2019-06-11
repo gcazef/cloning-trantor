@@ -23,21 +23,21 @@ resource_t generate_resource(void)
 char *display_resources(cell_t *cell)
 {
     char *result = calloc((cell->players * 7 + 1), sizeof(char));
-    int resLen = 0;
-    int oldLen = 0;
+    int res_len = 0;
+    int old_len = 0;
 
     for (int i = 0; i < cell->players; i++)
         result = strcat(result, " player");
     for (int i = 0; i < 7; i++) {
-        resLen = (strlen(resource_names[i]) + 1) * (cell->resources).res[i];
-        oldLen = strlen(result);
-        result = realloc(result, (resLen + oldLen + 1) * sizeof(char));
-        result[oldLen] = '\0';
+        res_len = (strlen(resource_names[i]) + 1) * (cell->resources).res[i];
+        old_len = strlen(result);
+        result = realloc(result, (res_len + old_len + 1) * sizeof(char));
+        result[old_len] = '\0';
         for (int j = 0; j < (cell->resources).res[i]; j++) {
             result = strcat(result, " ");
             result = strcat(result, resource_names[i]);
         }
-        result[oldLen + resLen] = '\0';
+        result[old_len + res_len] = '\0';
     }
     return (result);
 }

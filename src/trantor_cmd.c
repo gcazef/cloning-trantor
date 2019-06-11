@@ -52,7 +52,7 @@ int send_cmd(int indice, char *item, player_t *player)
         return (0);
     }
     else if ((indice >= 3) && (indice < 5)) {
-        (socket_cmd[indice - 3])(player, player->socket_fd);
+        (socket_cmd[indice - 3])(player);
         return (1);
     }
     else {
