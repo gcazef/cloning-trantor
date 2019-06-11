@@ -7,9 +7,9 @@
 
 #include "trantor.h"
 
-int main(int argc, char **argv)
+int main(int ac, char **av)
 {
-    if (trantor(argc, argv) == -1)
+    if (trantor(ac, av) == -1)
         return (84);
     return (0);
 }
