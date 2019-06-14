@@ -84,9 +84,13 @@ void rotate_right(player_t *player)
 
 void move_forward(player_t *player)
 {
+    pthread_mutex_lock(&(player->position->player_mutex));
     player->position->players -= 1;
+    pthread_mutex_unlock(&(player->position->player_mutex));
     player->position = player->front_cell;
+    pthread_mutex_lock(&(player->position->player_mutex));
     player->position->players += 1;
+    pthread_mutex_unlock(&(player->position->player_mutex));
     if (player->look == UP)
         player->front_cell = (player->position)->up;
     if (player->look == RIGHT)

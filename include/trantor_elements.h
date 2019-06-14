@@ -31,6 +31,7 @@ typedef struct cell {
     resource_t resources;
     int players;
     pthread_mutex_t res_mutex[7];
+    pthread_mutex_t player_mutex;
 } cell_t;
 
 typedef enum look {
