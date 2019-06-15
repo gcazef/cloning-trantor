@@ -33,10 +33,12 @@ char *display_resources(cell_t *cell)
         old_len = strlen(result);
         result = realloc(result, (res_len + old_len + 1) * sizeof(char));
         result[old_len] = '\0';
+        pthread_mutex_lock(&(cell->res_mutex[i]));
         for (int j = 0; j < (cell->resources).res[i]; j++) {
             result = strcat(result, " ");
             result = strcat(result, resource_names[i]);
         }
+        pthread_mutex_unlock(&(cell->res_mutex[i]));
         result[old_len + res_len] = '\0';
     }
     return (result);
@@ -93,13 +95,12 @@ int take_resource(player_t *player, char *name)
     }
     if (found != 0)
         return (84);
+    pthread_mutex_lock(&(pos->res_mutex[i - 1]));
     present = (pos->resources).res[i - 1];
     if (present > 0) {
-        pthread_mutex_lock(&(pos->res_mutex[i - 1]));
         (player->inventory).res[i - 1] += 1;
         (pos->resources).res[i - 1] -= 1;
-        pthread_mutex_unlock(&(pos->res_mutex[i - 1]));
-        return (0);
     }
-    return (84);
+    pthread_mutex_unlock(&(pos->res_mutex[i - 1]));
+    return (present > 0) ? 0 : 84;
 }
