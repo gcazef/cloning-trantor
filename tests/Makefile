@@ -18,6 +18,7 @@ SRC		=	$(SRC_DIR)trantor_elements.c\
 			$(SRC_DIR)trantor.c\
 			test_trantor_world.c\
 			test_trantor_ressources.c\
+			test_trantor_cmd.c\
 			test_trantor.c
 
 OBJ		=	$(SRC:.c=.o)

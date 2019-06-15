@@ -8,6 +8,8 @@
 #ifndef TRANTOR_CMD_H_
 #define TRANTOR_CMD_H_
 
+#include "trantor_elements.h"
+
 #define BUFF_SIZE 2048
 
 int send_resp(int sockfd, int cmd_val);
