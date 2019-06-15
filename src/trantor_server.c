@@ -90,12 +90,13 @@ int init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
         close(c_sckt);
         return print_error("Could not create thread");
     }
-    return (0);
+    return (c_sckt);
 }
 
 int trantor_server(int port, grid_t grid)
 {
     int my_socket;
+    int client_socket = 0;
     struct sockaddr_in client;
 
     grid_entry = grid;
@@ -103,9 +104,13 @@ int trantor_server(int port, grid_t grid)
     my_socket = create_socket(port);
     if (my_socket == -1)
         return (-1);
-    while (1)
-        //test return value
-        init_conn(client, my_socket, grid);
+    while (1) {
+        client_socket = init_conn(client, my_socket, grid);
+        if (client_socket > 0) {
+            sockets[nb_clients] = client_socket;
+            nb_clients++;
+        }
+    }
     return (0);
 }
 
@@ -113,6 +118,7 @@ void signal_handler(int signo)
 {
     if (signo == SIGINT) {
         destroy_grid(grid_entry.top_left);
+        close_sockets(sockets, nb_clients);
         exit(0);
     }
 }

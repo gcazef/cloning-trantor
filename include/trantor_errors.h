@@ -10,5 +10,6 @@
 
 void print_usage(void);
 int print_error(char *msg);
+void close_sockets(int sockets[], int nb_clients);
 
 #endif /* !TRANTOR_ERRORS_H_ */
