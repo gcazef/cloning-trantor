@@ -44,7 +44,9 @@ int check_args(const args_t *args)
 {
     if (args->port < 0 || args->port > 65535)
         return (-1);
-    else if (args->height <= 0 || args->width <= 0)
+    else if (args->height < 2 || args->height > 1000)
+        return (-1);
+    else if (args->width < 2 || args->width > 1000)
         return (-1);
     return (0);
 }

@@ -32,6 +32,8 @@ void *connection_handler(void *player)
     char client_message[BUFF_SIZE];
     int cmd_val = 0;
 
+    read_buffer(p->socket_fd, client_message);
+    dprintf(p->socket_fd, "1\n%d %d\n", grid_entry.width, grid_entry.height);
     while ((read_size = read_buffer(p->socket_fd, client_message)) > 0) {
         cmd_val = check_cmd(client_message, p);
         if (send_resp(p->socket_fd, cmd_val) < 0)
@@ -40,6 +42,7 @@ void *connection_handler(void *player)
             break;
         memset(client_message, 0, BUFF_SIZE);
     }
+    // il faut un mutex lock
     p->position->players -= 1;
     close(p->socket_fd);
     free(p);
@@ -47,8 +50,9 @@ void *connection_handler(void *player)
     pthread_exit(NULL);
 }
 
-int create_socket(int port, struct sockaddr_in server)
+int create_socket(int port)
 {
+    struct sockaddr_in server;
     int server_socket;
     int conn;
 
@@ -73,7 +77,6 @@ int init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
     socklen_t cli_len = 0;
     pthread_t thread_id;
     player_t *p;
-    char client_message[BUFF_SIZE];
 
     c_sckt = accept(s_sckt, (struct sockaddr *)&client, &cli_len);
     if (c_sckt == -1)
@@ -81,8 +84,6 @@ int init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
     p = create_player(grid.top_left, grid.height, grid.width);
     p->socket_fd = c_sckt;
     dprintf(p->socket_fd, "WELCOME\n");
-    read_buffer(p->socket_fd, client_message);
-    dprintf(p->socket_fd, "1\n%d %d\n", grid_entry.width, grid_entry.height);
     if (pthread_create(&thread_id, NULL, connection_handler, (void*)p) < 0) {
         close(c_sckt);
         return print_error("Could not create thread");
@@ -93,19 +94,15 @@ int init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
 int trantor_server(int port, grid_t grid)
 {
     int my_socket;
-    int nb_threads = 0;
-    struct sockaddr_in server;
     struct sockaddr_in client;
 
     grid_entry = grid;
     signal(SIGINT, signal_handler);
-    my_socket = create_socket(port, server);
+    my_socket = create_socket(port);
     if (my_socket == -1)
         return (-1);
-    while (1) {
+    while (1)
         init_conn(client, my_socket, grid);
-        nb_threads++;
-    }
     return (0);
 }
 

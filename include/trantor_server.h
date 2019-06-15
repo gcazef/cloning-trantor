@@ -19,7 +19,7 @@ grid_t grid_entry;
 
 void signal_handler(int signo);
 void *connection_handler(void *player);
-int create_socket(int port, struct sockaddr_in server);
+int create_socket(int port);
 int init_conn(struct sockaddr_in client, int s_sckt, grid_t grid);
 int trantor_server(int port, grid_t grid);
 

@@ -50,8 +50,12 @@ Test(check_args, good_dimensions)
     int result;
 
     args.port = 4242;
-    args.height = 10;
-    args.width = 10;
+    args.height = 2;
+    args.width = 2;
+    result = check_args(&args);
+    cr_assert_eq(result, 0);
+    args.height = 1000;
+    args.width = 1000;
     result = check_args(&args);
     cr_assert_eq(result, 0);
 }
