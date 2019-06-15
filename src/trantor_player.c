@@ -20,6 +20,8 @@ player_t *create_player(cell_t *top_left, int height, int width)
     int posX = rand() % width;
     int posY = rand() % height;
 
+    if (new_player == NULL)
+        return (NULL);
     for (int i = 0; i < posX; i++)
         pos = pos->right;
     for (int i = 0; i < posY; i++)
@@ -107,9 +109,13 @@ void display_inventory(player_t *player)
     char *temp;
     int len = 0;
 
+    if (result == NULL)
+        return;
     result[0] = '[';
     for (int i = 0; i < 7; i++) {
         temp = calloc((9 + strlen(resource_names[i])), sizeof(char));
+        if (temp == NULL)
+            return;
         sprintf(temp, " %s %d", resource_names[i], (player->inventory).res[i]);
         len = strlen(result);
         result = realloc(result, (len + strlen(temp) + 2));

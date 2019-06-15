@@ -66,6 +66,8 @@ int check_cmd(char *client_message, player_t *player)
     char *comp = strdup(client_message);
     int item_pos = 0;
 
+    if (comp == NULL)
+        return (-1);
     strtok(comp, " ");
     item_pos = strlen(comp) + 1;
     for (int i = 0; i < 7; i++) {

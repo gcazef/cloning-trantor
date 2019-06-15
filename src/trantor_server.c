@@ -36,9 +36,9 @@ void *connection_handler(void *player)
     dprintf(p->socket_fd, "1\n%d %d\n", grid_entry.width, grid_entry.height);
     while ((read_size = read_buffer(p->socket_fd, client_message)) > 0) {
         cmd_val = check_cmd(client_message, p);
-        if (send_resp(p->socket_fd, cmd_val) < 0)
-            break;
         if (cmd_val < 0)
+            break;
+        if (send_resp(p->socket_fd, cmd_val) < 0)
             break;
     }
     pthread_mutex_lock(&(p->position->player_mutex));
@@ -82,6 +82,8 @@ int init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
     if (c_sckt == -1)
         return print_error("Could not accept connection");
     p = create_player(grid.top_left, grid.height, grid.width);
+    if (p == NULL)
+        return (-1);
     p->socket_fd = c_sckt;
     dprintf(p->socket_fd, "WELCOME\n");
     if (pthread_create(&thread_id, NULL, connection_handler, (void*)p) < 0) {
@@ -102,6 +104,7 @@ int trantor_server(int port, grid_t grid)
     if (my_socket == -1)
         return (-1);
     while (1)
+        //test return value
         init_conn(client, my_socket, grid);
     return (0);
 }
