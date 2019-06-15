@@ -16,6 +16,8 @@
 #define BUFF_SIZE 2048
 
 grid_t grid_entry;
+int sockets[100];
+int nb_clients;
 
 void signal_handler(int signo);
 void *connection_handler(void *player);

@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <errno.h>
+#include <unistd.h>
 
 void print_usage(void)
 {
@@ -17,4 +18,12 @@ int print_error(char *msg)
 {
     perror(msg);
     return (-1);
+}
+
+void close_sockets(int sockets[], int nb_clients)
+{
+    for (int i = 0; i < nb_clients; i++) {
+        printf("Sockets[%d]: %d\n", i, sockets[i]);
+        close(sockets[i]);
+    }
 }
