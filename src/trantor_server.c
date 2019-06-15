@@ -40,10 +40,10 @@ void *connection_handler(void *player)
             break;
         if (cmd_val < 0)
             break;
-        memset(client_message, 0, BUFF_SIZE);
     }
-    // il faut un mutex lock
+    pthread_mutex_lock(&(p->position->player_mutex));
     p->position->players -= 1;
+    pthread_mutex_unlock(&(p->position->player_mutex));
     close(p->socket_fd);
     free(p);
     pthread_detach(pthread_self());
