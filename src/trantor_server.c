@@ -41,11 +41,7 @@ void *connection_handler(void *player)
         if (send_resp(p->socket_fd, cmd_val) < 0)
             break;
     }
-    pthread_mutex_lock(&(p->position->player_mutex));
-    p->position->players -= 1;
-    pthread_mutex_unlock(&(p->position->player_mutex));
-    close(p->socket_fd);
-    free(p);
+    nb_clients = delete_player(p, all_players, nb_clients);
     pthread_detach(pthread_self());
     pthread_exit(NULL);
 }
@@ -90,26 +86,29 @@ int init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
         close(c_sckt);
         return print_error("Could not create thread");
     }
+    nb_clients = add_player(p, all_players, nb_clients);
     return (c_sckt);
 }
 
 int trantor_server(int port, grid_t grid)
 {
     int my_socket;
-    int client_socket = 0;
+    // int client_socket = 0;
     struct sockaddr_in client;
 
+    memset(all_players, 0, MAX_CO * sizeof(player_t*));
     grid_entry = grid;
     signal(SIGINT, signal_handler);
     my_socket = create_socket(port);
     if (my_socket == -1)
         return (-1);
     while (1) {
-        client_socket = init_conn(client, my_socket, grid);
-        if (client_socket > 0) {
-            sockets[nb_clients] = client_socket;
-            nb_clients++;
-        }
+        // client_socket = init_conn(client, my_socket, grid);
+        init_conn(client, my_socket, grid);
+        // if (client_socket > 0) {
+            // sockets[nb_clients] = client_socket;
+            // nb_clients++;
+        // }
     }
     return (0);
 }
@@ -118,7 +117,8 @@ void signal_handler(int signo)
 {
     if (signo == SIGINT) {
         destroy_grid(grid_entry.top_left);
-        close_sockets(sockets, nb_clients);
+        remove_all_players(all_players, nb_clients);
+        // close_sockets(sockets, nb_clients);
         exit(0);
     }
 }

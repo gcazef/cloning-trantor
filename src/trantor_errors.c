@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <errno.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include "trantor_elements.h"
 
 void print_usage(void)
 {
@@ -20,9 +22,45 @@ int print_error(char *msg)
     return (-1);
 }
 
-void close_sockets(int sockets[], int nb_clients)
+int add_player(player_t *player, player_t **all_players, int nb_clients)
+{
+    for (int i = 0; i <= nb_clients; i++) {
+        if (all_players[i] == NULL) {
+            all_players[i] = player;
+            nb_clients++;
+            break;
+        }
+    }
+    return (nb_clients);
+}
+
+int delete_player(player_t *player, player_t **all_players, int nb_clients)
+{
+    for (int i = 0; i <= nb_clients; i++) {
+        if (all_players[i] == player) {
+            all_players[i] = NULL;
+            break;
+        }
+    }
+    pthread_mutex_lock(&(player->position->player_mutex));
+    player->position->players -= 1;
+    pthread_mutex_unlock(&(player->position->player_mutex));
+    close(player->socket_fd);
+    free(player);
+    return (nb_clients - 1);
+}
+
+void remove_all_players(player_t **all_players, int nb_clients)
 {
     for (int i = 0; i < nb_clients; i++) {
-        close(sockets[i]);
+        if (all_players[i] != NULL)
+            delete_player(all_players[i], all_players, nb_clients);
     }
 }
+
+// void close_sockets(int sockets[], int nb_clients)
+// {
+//     for (int i = 0; i < nb_clients; i++) {
+//         close(sockets[i]);
+//     }
+// }

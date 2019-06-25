@@ -16,7 +16,7 @@
 #define BUFF_SIZE 2048
 
 grid_t grid_entry;
-int sockets[MAX_CO];
+player_t *all_players[MAX_CO];
 int nb_clients;
 
 void signal_handler(int signo);

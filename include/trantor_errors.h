@@ -10,6 +10,9 @@
 
 void print_usage(void);
 int print_error(char *msg);
-void close_sockets(int sockets[], int nb_clients);
+int add_player(player_t *player, player_t **all_players, int nb_clients);
+int delete_player(player_t *player, player_t **all_players, int nb_clients);
+void remove_all_players(player_t **all_players, int nb_clients);
+// void close_sockets(int sockets[], int nb_clients);
 
 #endif /* !TRANTOR_ERRORS_H_ */
