@@ -47,7 +47,6 @@ int delete_player(player_t *player, player_t **all_players, int nb_clients)
     player->position->players -= 1;
     pthread_mutex_unlock(&(player->position->player_mutex));
     close(player->socket_fd);
-    // free(&player->inventory);
     free(player);
     return (nb_clients - 1);
 }
@@ -59,10 +58,3 @@ void remove_all_players(player_t **all_players, int nb_clients)
             delete_player(all_players[i], all_players, nb_clients);
     }
 }
-
-// void close_sockets(int sockets[], int nb_clients)
-// {
-//     for (int i = 0; i < nb_clients; i++) {
-//         close(sockets[i]);
-//     }
-// }

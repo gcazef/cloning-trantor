@@ -92,7 +92,6 @@ int init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
 int trantor_server(int port, grid_t grid)
 {
     int my_socket;
-    // int client_socket = 0;
     struct sockaddr_in client;
 
     memset(all_players, 0, MAX_CO * sizeof(player_t*));
@@ -102,12 +101,7 @@ int trantor_server(int port, grid_t grid)
     if (my_socket == -1)
         return (-1);
     while (1) {
-        // client_socket = init_conn(client, my_socket, grid);
         init_conn(client, my_socket, grid);
-        // if (client_socket > 0) {
-            // sockets[nb_clients] = client_socket;
-            // nb_clients++;
-        // }
     }
     return (0);
 }
@@ -117,7 +111,6 @@ void signal_handler(int signo)
     if (signo == SIGINT) {
         remove_all_players(all_players, nb_clients);
         destroy_grid(grid_entry.top_left);
-        // close_sockets(sockets, nb_clients);
         exit(0);
     }
 }
