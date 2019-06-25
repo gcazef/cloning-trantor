@@ -115,8 +115,8 @@ int trantor_server(int port, grid_t grid)
 void signal_handler(int signo)
 {
     if (signo == SIGINT) {
-        destroy_grid(grid_entry.top_left);
         remove_all_players(all_players, nb_clients);
+        destroy_grid(grid_entry.top_left);
         // close_sockets(sockets, nb_clients);
         exit(0);
     }
