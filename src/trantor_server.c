@@ -23,7 +23,6 @@
 #include "trantor_resources.h"
 #include "trantor_server.h"
 #include "trantor_cmd.h"
-#include "trantor_errors.h"
 
 void *connection_handler(void *player)
 {

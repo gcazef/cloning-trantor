@@ -8,6 +8,8 @@
 #ifndef TRANTOR_ERRORS_H_
 #define TRANTOR_ERRORS_H_
 
+#define MAX_CO 254
+
 void print_usage(void);
 int print_error(char *msg);
 int add_player(player_t *player, player_t **all_players, int nb_clients);

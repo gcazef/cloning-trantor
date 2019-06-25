@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "trantor_elements.h"
+#include "trantor_errors.h"
 
 void print_usage(void)
 {
@@ -24,7 +25,7 @@ int print_error(char *msg)
 
 int add_player(player_t *player, player_t **all_players, int nb_clients)
 {
-    for (int i = 0; i <= nb_clients; i++) {
+    for (int i = 0; i <= MAX_CO; i++) {
         if (all_players[i] == NULL) {
             all_players[i] = player;
             nb_clients++;
@@ -36,7 +37,7 @@ int add_player(player_t *player, player_t **all_players, int nb_clients)
 
 int delete_player(player_t *player, player_t **all_players, int nb_clients)
 {
-    for (int i = 0; i <= nb_clients; i++) {
+    for (int i = 0; i <= MAX_CO; i++) {
         if (all_players[i] == player) {
             all_players[i] = NULL;
             break;
@@ -52,7 +53,7 @@ int delete_player(player_t *player, player_t **all_players, int nb_clients)
 
 void remove_all_players(player_t **all_players, int nb_clients)
 {
-    for (int i = 0; i < nb_clients; i++) {
+    for (int i = 0; i < MAX_CO; i++) {
         if (all_players[i] != NULL)
             delete_player(all_players[i], all_players, nb_clients);
     }

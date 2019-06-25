@@ -10,9 +10,9 @@
 
 #include <netinet/in.h>
 #include "trantor_elements.h"
+#include "trantor_errors.h"
 
 #define ADDR "127.0.0.1"
-#define MAX_CO 254
 #define BUFF_SIZE 2048
 
 grid_t grid_entry;
