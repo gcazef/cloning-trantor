@@ -43,11 +43,13 @@ int delete_player(player_t *player, player_t **all_players, int nb_clients)
             break;
         }
     }
-    pthread_mutex_lock(&(player->position->player_mutex));
-    player->position->players -= 1;
-    pthread_mutex_unlock(&(player->position->player_mutex));
-    close(player->socket_fd);
-    free(player);
+    if (player != NULL) {
+        pthread_mutex_lock(&(player->position->player_mutex));
+        player->position->players -= 1;
+        pthread_mutex_unlock(&(player->position->player_mutex));
+        close(player->socket_fd);
+        free(player);
+    }
     return (nb_clients - 1);
 }
 
