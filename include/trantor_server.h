@@ -12,11 +12,11 @@
 #include "trantor_elements.h"
 
 #define ADDR "127.0.0.1"
-#define MAX_CO 1000
+#define MAX_CO 254
 #define BUFF_SIZE 2048
 
 grid_t grid_entry;
-int sockets[100];
+int sockets[MAX_CO];
 int nb_clients;
 
 void signal_handler(int signo);

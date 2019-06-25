@@ -23,7 +23,6 @@ int print_error(char *msg)
 void close_sockets(int sockets[], int nb_clients)
 {
     for (int i = 0; i < nb_clients; i++) {
-        printf("Sockets[%d]: %d\n", i, sockets[i]);
         close(sockets[i]);
     }
 }
