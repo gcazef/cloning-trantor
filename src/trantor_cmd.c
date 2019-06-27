@@ -25,24 +25,22 @@ int send_resp(int sockfd, int cmd_val)
     return (0);
 }
 
-int read_buffer(int sockfd, char *result)
+int read_buffer(int sockfd, ring_buff_t *result)
 {
     char temp = 0;
     int read_bytes = 1;
-    int i = 0;
 
-    memset(result, 0, BUFF_SIZE);
     while (temp != '\n' && read_bytes > 0) {
         read_bytes = read(sockfd, &temp, 1);
         if (read_bytes <= 0)
             return (-1);
-        result[i] = temp;
-        if (i >= BUFF_SIZE)
-            i = 0;
+        result->buff[result->writer] = temp;
+        if (result->writer == BUFF_SIZE - 1)
+            result->writer = 0;
         else
-            i++;
+            result->writer++;
     }
-    return (i);
+    return (read_bytes);
 }
 
 int send_cmd(int indice, char *item, player_t *player)
@@ -61,11 +59,31 @@ int send_cmd(int indice, char *item, player_t *player)
     }
 }
 
-int check_cmd(char *client_message, player_t *player)
+void pop_buff(ring_buff_t *res, char *msg)
 {
-    char *comp = strdup(client_message);
+    int i = 0;
+
+    while (res->reader != res->writer) {
+        if (msg != NULL)
+            msg[i] = res->buff[res->reader];
+        if (res->reader == BUFF_SIZE - 1)
+            res->reader = 0;
+        else
+            res->reader++;
+        i++;
+    }
+    if (msg == NULL)
+        res->writer = res->reader;
+}
+
+int check_cmd(ring_buff_t *result, player_t *player)
+{
+    char msg[BUFF_SIZE] = { 0 };
+    char *comp;
     int item_pos = 0;
 
+    pop_buff(result, msg);
+    comp = strdup(msg);
     if (comp == NULL)
         return (-1);
     strtok(comp, " ");
@@ -73,7 +91,7 @@ int check_cmd(char *client_message, player_t *player)
     for (int i = 0; i < 7; i++) {
         if (strcmp(cmd_names[i], comp) == 0) {
             free(comp);
-            return (send_cmd(i, &client_message[item_pos], player));
+            return (send_cmd(i, &msg[item_pos], player));
         }
     }
     return (84);

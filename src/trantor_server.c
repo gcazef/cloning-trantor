@@ -28,14 +28,16 @@ void *connection_handler(void *player)
 {
     player_t *p = (player_t *) player;
     int read_size = 0;
-    char client_message[BUFF_SIZE];
     int cmd_val = 0;
+    char client_message[BUFF_SIZE] = { 0 };
+    ring_buff_t c_msg = {client_message, 0, 0};
 
     p->thread_id = pthread_self();
-    read_buffer(p->socket_fd, client_message);
+    read_buffer(p->socket_fd, &c_msg);
+    pop_buff(&c_msg, NULL);
     dprintf(p->socket_fd, "1\n%d %d\n", grid_entry.width, grid_entry.height);
-    while ((read_size = read_buffer(p->socket_fd, client_message)) > 0) {
-        cmd_val = check_cmd(client_message, p);
+    while ((read_size = read_buffer(p->socket_fd, &c_msg)) > 0) {
+        cmd_val = check_cmd(&c_msg, p);
         if (cmd_val < 0)
             break;
         if (send_resp(p->socket_fd, cmd_val) < 0)

@@ -13,7 +13,6 @@
 #include "trantor_errors.h"
 
 #define ADDR "127.0.0.1"
-#define BUFF_SIZE 2048
 
 grid_t grid_entry;
 player_t *all_players[MAX_CO];
