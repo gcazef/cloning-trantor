@@ -31,6 +31,7 @@ void *connection_handler(void *player)
     char client_message[BUFF_SIZE];
     int cmd_val = 0;
 
+    p->thread_id = pthread_self();
     read_buffer(p->socket_fd, client_message);
     dprintf(p->socket_fd, "1\n%d %d\n", grid_entry.width, grid_entry.height);
     while ((read_size = read_buffer(p->socket_fd, client_message)) > 0) {
@@ -41,7 +42,6 @@ void *connection_handler(void *player)
             break;
     }
     nb_clients = delete_player(p, all_players, nb_clients);
-    pthread_detach(pthread_self());
     pthread_exit(NULL);
 }
 

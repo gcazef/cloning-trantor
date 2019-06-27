@@ -47,6 +47,7 @@ typedef struct player {
     look_t look;
     resource_t inventory;
     int socket_fd;
+    pthread_t thread_id;
 } player_t;
 
 typedef struct grid {
