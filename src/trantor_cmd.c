@@ -43,22 +43,6 @@ int read_buffer(int sockfd, ring_buff_t *result)
     return (read_bytes);
 }
 
-int send_cmd(int indice, char *item, player_t *player)
-{
-    if (indice < 3) {
-        (no_arg_cmd[indice])(player);
-        return (0);
-    }
-    else if ((indice >= 3) && (indice < 5)) {
-        (socket_cmd[indice - 3])(player);
-        return (1);
-    }
-    else {
-        strtok(item, "\n");
-        return ((arg_cmd[indice - 5])(player, item));
-    }
-}
-
 void pop_buff(ring_buff_t *res, char *msg)
 {
     int i = 0;
@@ -75,6 +59,23 @@ void pop_buff(ring_buff_t *res, char *msg)
     if (msg == NULL)
         res->writer = res->reader;
 }
+
+int send_cmd(int indice, char *item, player_t *player)
+{
+    if (indice < 3) {
+        (no_arg_cmd[indice])(player);
+        return (0);
+    }
+    else if ((indice >= 3) && (indice < 5)) {
+        (socket_cmd[indice - 3])(player);
+        return (1);
+    }
+    else {
+        strtok(item, "\n");
+        return ((arg_cmd[indice - 5])(player, item));
+    }
+}
+
 
 int check_cmd(ring_buff_t *result, player_t *player)
 {
