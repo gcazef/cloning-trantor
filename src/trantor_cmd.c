@@ -76,7 +76,6 @@ int send_cmd(int indice, char *item, player_t *player)
     }
 }
 
-
 int check_cmd(ring_buff_t *result, player_t *player)
 {
     char msg[BUFF_SIZE] = { 0 };
