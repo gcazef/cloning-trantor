@@ -64,7 +64,10 @@ int create_socket(int port)
         close(server_socket);
         return print_error("There was an error connecting to remote socket");
     }
-    listen(server_socket, MAX_CO);
+    if (listen(server_socket, MAX_CO) == -1) {
+        close(server_socket);
+        return print_error("There was an error listening for connections.");
+    }
     return (server_socket);
 }
 
