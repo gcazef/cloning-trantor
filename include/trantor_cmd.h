@@ -10,7 +10,8 @@
 
 #include "trantor_elements.h"
 
-#define BUFF_SIZE 16
+#define BUFF_SIZE 64
+#define READ_SIZE 16
 
 typedef struct ring_buff {
     char * const buff;

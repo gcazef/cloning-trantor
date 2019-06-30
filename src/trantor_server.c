@@ -37,6 +37,8 @@ void *connection_handler(void *player)
     pop_buff(&c_msg, NULL);
     dprintf(p->socket_fd, "1\n%d %d\n", grid_entry.width, grid_entry.height);
     while ((read_size = read_buffer(p->socket_fd, &c_msg)) > 0) {
+        if (read_size == -1)
+            break;
         cmd_val = check_cmd(&c_msg, p);
         if (cmd_val < 0)
             break;
