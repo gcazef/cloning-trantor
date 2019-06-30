@@ -48,7 +48,6 @@ int delete_player(player_t *player, player_t **all_players, int nb_clients)
         player->position->players -= 1;
         pthread_mutex_unlock(&(player->position->player_mutex));
         close(player->socket_fd);
-        pthread_detach(player->thread_id);
         pthread_cancel(player->thread_id);
         free(player);
     }

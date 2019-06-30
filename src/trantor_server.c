@@ -92,6 +92,8 @@ int init_conn(struct sockaddr_in client, int s_sckt, grid_t grid)
         close(c_sckt);
         return print_error("Could not create thread");
     }
+    if (pthread_detach(thread_id) != 0)
+        return print_error("Could not detach thread");
     nb_clients = add_player(p, all_players, nb_clients);
     return (c_sckt);
 }
