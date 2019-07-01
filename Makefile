@@ -13,6 +13,7 @@ SRC 	=	$(SRC_DIR)trantor_elements.c\
 			$(SRC_DIR)trantor_world.c\
 			$(SRC_DIR)trantor_player.c\
 			$(SRC_DIR)trantor_server.c\
+			$(SRC_DIR)trantor_buff.c\
 			$(SRC_DIR)trantor_cmd.c\
 			$(SRC_DIR)trantor_errors.c\
 			$(SRC_DIR)trantor.c\

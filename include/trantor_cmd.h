@@ -9,19 +9,10 @@
 #define TRANTOR_CMD_H_
 
 #include "trantor_elements.h"
-
-#define BUFF_SIZE 64
-#define READ_SIZE 16
-
-typedef struct ring_buff {
-    char * const buff;
-    int reader;
-    int writer;
-} ring_buff_t;
+#include "trantor_buff.h"
 
 int send_resp(int sockfd, int cmd_val);
 int read_buffer(int sockfd, ring_buff_t *result);
-void pop_buff(ring_buff_t *res, char *msg);
 int send_cmd(int indice, char *item, player_t *player);
 int check_cmd(ring_buff_t *result, player_t *player);
 

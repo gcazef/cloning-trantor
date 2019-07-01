@@ -27,37 +27,25 @@ int send_resp(int sockfd, int cmd_val)
 
 int read_buffer(int sockfd, ring_buff_t *result)
 {
-    char temp = 0;
+    char temp[BUFF_SIZE + 1] = { 0 };
+    char curr = 0;
     int read_bytes = 1;
-
-    while (temp != '\n' && read_bytes > 0) {
-        read_bytes = read(sockfd, &temp, 1);
-        if (read_bytes <= 0)
-            return (-1);
-        result->buff[result->writer] = temp;
-        if (result->writer == BUFF_SIZE - 1)
-            result->writer = 0;
-        else
-            result->writer++;
-    }
-    return (read_bytes);
-}
-
-void pop_buff(ring_buff_t *res, char *msg)
-{
     int i = 0;
 
-    while (res->reader != res->writer) {
-        if (msg != NULL)
-            msg[i] = res->buff[res->reader];
-        if (res->reader == BUFF_SIZE - 1)
-            res->reader = 0;
-        else
-            res->reader++;
-        i++;
+    read_bytes = read(sockfd, temp, BUFF_SIZE);
+    while (curr != '\n' && read_bytes > 0) {
+        while (temp[i - 1] != '\n' && temp[i] != 0) {
+            curr = temp[i];
+            push_buff(result, curr);
+            i++;
+        }
+        i = 0;
+        if (curr != '\n') {
+            read_bytes = read(sockfd, temp, BUFF_SIZE);
+            temp[read_bytes] = 0;
+        }
     }
-    if (msg == NULL)
-        res->writer = res->reader;
+    return (read_bytes);
 }
 
 int send_cmd(int indice, char *item, player_t *player)

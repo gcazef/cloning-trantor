@@ -39,16 +39,3 @@ Test(send_resp, bad_file_descriptor)
 
     cr_assert_eq(retval, -1);
 }
-
-Test(pop_buff, buffer_pops_data)
-{
-    char msg[BUFF_SIZE] = { 0 };
-    char result[BUFF_SIZE] = { 0 };
-    ring_buff_t buffer = { msg, 0, 5 };
-
-    strcpy(buffer.buff, "look\n");
-    pop_buff(&buffer, result);
-    cr_assert_str_eq(buffer.buff, result);
-    cr_assert_eq(buffer.writer, 5);
-    cr_assert_eq(buffer.reader, 5);
-}
