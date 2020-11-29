@@ -24,6 +24,10 @@
 #include "trantor_server.h"
 #include "trantor_cmd.h"
 
+grid_t grid_entry;
+player_t *all_players[MAX_CO];
+int nb_clients;
+
 void *connection_handler(void *player)
 {
     player_t *p = (player_t *) player;

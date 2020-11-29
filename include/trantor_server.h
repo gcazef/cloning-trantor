@@ -14,10 +14,6 @@
 
 #define ADDR "127.0.0.1"
 
-grid_t grid_entry;
-player_t *all_players[MAX_CO];
-int nb_clients;
-
 void signal_handler(int signo);
 void *connection_handler(void *player);
 int create_socket(int port);
